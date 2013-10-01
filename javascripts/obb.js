@@ -5,8 +5,6 @@ getHashParams()
 
 $(document).ready(function() {
 
-  $.timeago.settings.allowFuture = true;
-
   if (hashParams.hasOwnProperty('newbadges')) { 
     makeAlert("You've added " + hashParams.newbadges + " badges to your Backpack!",'success');
   }
