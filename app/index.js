@@ -1,5 +1,5 @@
 if (process.env.NEW_RELIC_HOME) {
-  require( 'newrelic' );
+  require('newrelic');
 }
 
 const config = require('./lib/config');
