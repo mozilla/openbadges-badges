@@ -54,3 +54,298 @@
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+////////////////////////
+// beg backpack proto //
+////////////////////////
+@import "compass";
+html,body {
+	background:#e5e5e5;
+}
+#settings > li {
+	width:100%;
+}
+.square.grid .content {
+	font-size:0.85em;
+}
+.square.grid .detail {
+	padding:0.625em;
+}
+.ui > ul > li > a.badge_action {
+	background-image:url('../img/sprite.png');
+	background-repeat:no-repeat;
+}
+.ui {
+	z-index:2;
+}
+.ui li {
+	list-style-type:none;
+}
+.ui .f-dropdown > li > a.brfc {
+float:left;
+margin-right:1.25em;
+}
+.ui .f-dropdown > li > a:hover {
+	text-decoration:underline;
+}
+.ui .f-dropdown > li hr {
+	margin:0.625em 0;
+}
+.ui .submenu li:hover a {
+	background-color:#fff;
+}
+.ui .f-dropdown {
+	padding-top:0.625em;
+	padding-bottom:0.625em;
+}
+.ui input {
+	max-width:175px;
+}
+#badge_modal {
+	display:none;
+}
+
+#badge_modal_inner {
+	position:absolute;
+	z-index:3;
+	background-color:#fff;
+	border-radius:2px;
+	-webkit-box-shadow: 0px 0px 14px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow:    0px 0px 14px rgba(50, 50, 50, 0.5);
+	box-shadow:         0px 0px 14px rgba(50, 50, 50, 0.5);
+	padding:1.25em;
+}
+#badge_modal_inner .close {
+	position:absolute;
+	top:0;
+	right:0;
+	padding:1.25em;
+}
+.alert-box {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	z-index:10;
+	display:none;
+}
+.top-bar,
+.top-bar-section li a:not(.button) {
+	background:#182d39;
+}
+.top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
+	border-left-color:#182d39;
+	border-right-color:#2e4958;
+}
+#badgefilter > div, 
+#badgefilter > select {
+	
+}
+span.title {
+	font-size:1.1em;
+}
+.square.grid {
+	position:relative;
+}
+.square.grid > li {
+	position:relative;
+}
+.square.grid > li > a {
+	position:relative;
+	display:block;
+	width:100%;
+	height:200px;
+	background-color:#fff;
+	border-radius:2px;
+	overflow:hidden;
+}
+.square.grid > li > .badgethumb > span.detail {
+	display:block;
+}
+.square.grid > li > a > span.detail {
+	position:absolute;
+	top:160px;
+	left:0;
+	width:100%;
+	height:100%;
+	background-image:url('../img/gd/90pw.png');
+	background-repeat:repeat;
+}
+.square.grid > li > .badgethumb {
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+.collection-thumbs.square.grid .minithumbs {
+	position:relative;
+	display:block;
+	max-width:125px;
+	margin:auto;
+	margin-top:1.25em;
+}
+.collection-thumbs.square.grid .minithumb {
+	position:absolute;
+	width:75px;
+	height:75px;
+	border:1px solid #c0c0c0;
+	border-radius:2px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	background-color:#fff;
+	-webkit-box-shadow: 0px 0px 14px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow:    0px 0px 14px rgba(50, 50, 50, 0.5);
+	box-shadow:         0px 0px 14px rgba(50, 50, 50, 0.5);
+}
+.collection-thumbs.square.grid .minithumb-1 {
+	top:0px;
+	left:0px;
+}
+.collection-thumbs.square.grid .minithumb-2 {
+	top:25px;
+	left:50px;
+}
+.collection-thumbs.square.grid .minithumb-3 { 
+	top:50px;
+	left:25px;
+}
+.square.grid > li > .badgethumb > span.detail > span {
+	display:block;
+}
+.square.grid .ui {
+	display:none;
+	position:absolute;
+	bottom:13px;
+	left:0;
+	width:100%;
+	padding:0 0.625em;
+}
+.grid .ui > ul {
+	margin-left:0px;
+	display:inline-block;
+	width:100%;
+	font-size:.75em;
+	background-color:#f4f4f4;
+	border-bottom-left-radius:2px;
+	border-bottom-right-radius:2px;
+	border-top:1px solid #e5e5e5;
+	margin-top:-1px;
+}
+.grid .ui > ul > li {
+	margin-left:0px;
+	float:left;
+}
+.grid .ui > ul > li > a {
+	display:block;
+	width:100%;
+	height:50px;
+	text-indent:-9000px;
+}
+.grid .ui > ul > li {
+	width:33%;
+}
+.badge_action.bdel,
+.collection_action.cdel, {
+	background-position:center 0px;
+}
+.badge_action.bcol {
+	background-position:center -267px;
+}
+.badge_action.bdet,
+.collection_action.cdet {
+	background-position:center -200px;
+}
+.collection_action.csha {
+	background-position:center -134px;
+}
+.collection_action.cedi {
+	background-position:center -66px;
+}
+.collections .badge-thumbs {
+	margin-left:0px;
+}
+.badge-thumbs.vertical > li {
+	list-style-type:none;
+	margin-bottom:0.625em;
+	position:relative;
+}
+.badge-thumbs.vertical > li > .badgethumb {
+	background-position:12px center;
+	background-repeat:no-repeat;
+	background-color:#fff;
+	display:block;
+	min-height:90px;
+}
+.badge-thumbs.vertical > li > .badgethumb > span {
+	margin-left:75px;
+	padding-top:0.625em;
+	padding-bottom:0.625em;
+}
+.badge-thumbs.vertical > li > .badgethumb span {
+	display:block;
+}
+
+.badge-thumbs.vertical .ui {
+	width:inherit;
+	position:absolute;
+	left:inherit;
+	bottom:0px;
+	right:0px;
+	width:100%;
+	padding-left:70px;
+	padding-right:0.625em;
+}
+.badge-thumbs.vertical .ui > ul {
+	border-radius:2px;
+	border:1px solid #e5e5e5;
+}
+.badge-thumbs.vertical > li > .badgethumb > .detail > .title {
+	line-height:2;
+}
+.fullbadge img {
+	float:right;
+}
+.fullbadge p {
+	line-height:1.25em;
+}
+.collection_action {
+	background-repeat:no-repeat;
+	background-image:url("../img/sprite.png");	
+}
+.collection_action {
+	height:40px;
+	display:block;
+	float:left;
+	text-indent:-9000px;
+	width:30px;
+}
+h2 .collection_action {
+	float:right;
+	margin-top:8px;
+}
+// public share page ///
+.logged-out.public .square.grid > li > p.badgethumb {
+	background-color:#fff;	
+}
+////////////////////////
+// end backpack proto //
+////////////////////////
+
+////////////////////////
+// beg issuer proto ////
+////////////////////////
+.issuer .badge-thumbs.vertical > li {
+	margin-bottom:0.625em;
+	padding-bottom:0px;
+}
+.issuer.confirm .badge-thumbs.vertical > li > .badgethumb {
+	float:left;
+	width:90%;
+}
+.issuer.confirm .badge-thumbs.vertical > li > span {
+	float:right;
+	display:block;
+	width:10%;
+	background-color:#fff;
+	min-height:90px;
+}
+////////////////////////
+// end issuer proto ////
+////////////////////////
