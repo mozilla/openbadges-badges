@@ -58,6 +58,10 @@
 // beg backpack proto //
 ////////////////////////
 @import "compass";
+@import "compass/layout/sticky-footer";
+
+@include sticky-footer(54px, "#main", "#main_footer", "#footer");
+
 html,body {
 	background:#e5e5e5;
 }
@@ -345,6 +349,10 @@ h2 .collection_action {
 	width:10%;
 	background-color:#fff;
 	min-height:90px;
+}
+#footer > .row {
+	background-color:#182d39;
+	color:#fff;
 }
 ////////////////////////
 // end issuer proto ////
