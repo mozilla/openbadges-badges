@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    {% block head -%}
+    <link rel="stylesheet" href="{{ static('/css/core.css') }}">
+    {%- endblock %}
+  </head>
+  <body>
+	{% block body -%}
+	{%- endblock %}
+  </body>
+</html>
