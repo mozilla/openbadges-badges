@@ -7636,7 +7636,11 @@ h2 .collection_action {
 }
 
 /* line 353, ../sass/app.scss */
-#footer > .row {
+#footer {
   background-color: #182d39;
+}
+
+/* line 356, ../sass/app.scss */
+#footer > .row {
   color: #fff;
 }

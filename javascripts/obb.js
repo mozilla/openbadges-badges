@@ -270,8 +270,6 @@ function retrieveBadge(hash) {
   badge.name="Some Badge";
   badge.org="Some Organization";
   badge.url_org="some-org.org";
-  badge.issue=1346760732;
-  badge.expire=1389484800;
   badge.url_criteria="some-org.org/criteria";
   badge.url_evidence="some-org.org/evidence";
   badge.desc="<p>Here is the user's description of the badge.";
@@ -281,8 +279,6 @@ function retrieveBadge(hash) {
   '<h3>' + badge.name + '</h3>' +
   '<img src="' + docroot + '/img/badge/' + hash + '-l.png">' +
   '<p>Issued by : <br><strong><a class="redirect ' + collection_hash1 + '" href="' + docroot + '/badge/by-organization/organizationhash-x.html">' + badge.org + '</a></strong><br>' + badge.url_org + '</p>' +
-  '<p>Issued ' + $.timeago(dateFromUnix(badge.issue)) + '.</p>' +
-  '<p>Expires ' + $.timeago(dateFromUnix(badge.expire)) + '.</p>' +
   '<p>Description : <br>' + badge.desc + '</p>' +
   '<p>Criteria : <a href="http://' + badge.url_criteria + '" target=_blank>' + badge.url_criteria + '</a></p>' +
   '<p>Evidence : <a href="http://' + badge.url_evidence + '" target=_blank>' + badge.url_evidence + '</a></p>' +
