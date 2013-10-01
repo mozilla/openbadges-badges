@@ -30,7 +30,6 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', 'home', views.home);
-app.get('/dml', 'dml.home', views.dml.home);
 app.get('/summit', 'summit.home', views.summit.home);
 
 app.get('*', views.errors.notFound);
