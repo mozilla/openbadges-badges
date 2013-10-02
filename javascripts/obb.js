@@ -1,5 +1,5 @@
 var hashParams = {};
-var docroot = '/moz/backpack';
+var docroot = '/moz/obb';
 getHashParams()
 
 
