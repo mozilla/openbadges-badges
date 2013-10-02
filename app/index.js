@@ -4,6 +4,7 @@ if (process.env.NEW_RELIC_HOME) {
 
 const config = require('./lib/config');
 const express = require('express');
+const middleware = require('./middleware');
 const nunjucks = require('nunjucks');
 const path = require('path');
 const views = require('./views');
@@ -29,7 +30,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', 'home', views.home);
+app.get('/', 'home', middleware.redirect('summit.home'));
 app.get('/summit', 'summit.home', views.summit.home);
 
 app.get('*', views.errors.notFound);
