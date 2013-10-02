@@ -1,1 +1,6 @@
 {% extends "layout.html" %}
+
+{% block head -%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ static('/css/summit.css') }}">
+{%- endblock %}

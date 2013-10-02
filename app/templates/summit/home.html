@@ -1,5 +1,33 @@
 {% extends "summit/layout.html" %}
 
 {% block content %}
-<h1>Mozilla Summit Badges!</h1>
+<div id="scene">
+  <div class="layer back"></div>
+  <div class="layer back-clouds"></div>
+  <div class="layer middle"></div>
+  <div class="layer middle-clouds"></div>
+  <div class="layer front"><div class="flag"></div></div>
+  <div class="layer front-clouds"></div>
+  <div class="layer foreground"></div>
+  <div id="panel">
+    <h1 class="title">You've reached the Summit</h1>
+    <p class="strapline"><label for="claim-code">Now plant your flag</label></p>
+    <form method="post" action="">
+      <label for="claim-code" id="claim-code-label">Enter your claim code</label>
+      <input type="text" name="code" id="claim-code">
+      <button type="submit">Go</button>
+      <script>
+        (function () {
+          // I know, I know... anti-pattern alert. Such is life.
+          var box = document.getElementById('claim-code');
+          var label = document.getElementById('claim-code-label');
+          if ('placeholder' in box) {
+            box.placeholder = label.innerHTML;
+            label.parentNode.removeChild(label);
+          }
+        })();
+      </script>
+    </form>
+  </div>
+</div>
 {% endblock %}
