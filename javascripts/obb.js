@@ -97,7 +97,7 @@ $(document).ready(function() {
 
       if(what == 'badge') {
         output += ''+
-        '<li><a class="badge_action bapp ' + hash + ' button small" href="./badge-x-apply.html">Apply</a></li>'+
+        '<li><a class="badge_action bapp ' + hash + ' button small" href="./badge-x-detail.html#apply">Apply</a></li>'+
         '<li><a class="badge_action bdet ' + hash + '" href="./badge-x-detail.html">Detail</a></li>';
       } else {
         //future UIs to go here
