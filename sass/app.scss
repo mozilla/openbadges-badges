@@ -53,30 +53,29 @@
 // @import "foundation/components/thumbs";
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
-
-////////////////////////
-// beg backpack proto //
-////////////////////////
 @import "compass";
 @import "compass/layout/sticky-footer";
 
 @include sticky-footer(54px, "#main", "#main_footer", "#footer");
+////////////////////////
+// beg backpack proto //
+////////////////////////
 
-html,body {
-	background:#e5e5e5;
-}
-#settings > li {
-	width:100%;
-}
+
 .square.grid .content {
 	font-size:0.85em;
 }
 .square.grid .detail {
-	padding:0.625em;
+	padding:0.8em;
 }
 .ui > ul > li > a.badge_action {
+	text-align:center;
+}
+.ui > ul > li > a.badge_action.bdet {
 	background-image:url('../img/sprite.png');
 	background-repeat:no-repeat;
+	text-indent:-9000px;
+	height:50px;
 }
 .ui {
 	z-index:2;
@@ -132,20 +131,12 @@ margin-right:1.25em;
 	z-index:10;
 	display:none;
 }
-.top-bar,
-.top-bar-section li a:not(.button) {
-	background:#182d39;
-}
-.top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
-	border-left-color:#182d39;
-	border-right-color:#2e4958;
-}
 #badgefilter > div, 
 #badgefilter > select {
 	
 }
 span.title {
-	font-size:1.1em;
+	font-size:1.4em;
 }
 .square.grid {
 	position:relative;
@@ -158,7 +149,7 @@ span.title {
 	display:block;
 	width:100%;
 	height:200px;
-	background-color:#fff;
+	background-color:#f0eee0;
 	border-radius:2px;
 	overflow:hidden;
 }
@@ -167,48 +158,15 @@ span.title {
 }
 .square.grid > li > a > span.detail {
 	position:absolute;
-	top:160px;
+	top:150px;
 	left:0;
 	width:100%;
 	height:100%;
-	background-image:url('../img/gd/90pw.png');
-	background-repeat:repeat;
+	background:rgba(240, 238, 224, 0.9);
 }
 .square.grid > li > .badgethumb {
-	background-position:center center;
+	background-position:center 1.5em;
 	background-repeat:no-repeat;
-}
-.collection-thumbs.square.grid .minithumbs {
-	position:relative;
-	display:block;
-	max-width:125px;
-	margin:auto;
-	margin-top:1.25em;
-}
-.collection-thumbs.square.grid .minithumb {
-	position:absolute;
-	width:75px;
-	height:75px;
-	border:1px solid #c0c0c0;
-	border-radius:2px;
-	background-repeat:no-repeat;
-	background-position:center center;
-	background-color:#fff;
-	-webkit-box-shadow: 0px 0px 14px rgba(50, 50, 50, 0.5);
-	-moz-box-shadow:    0px 0px 14px rgba(50, 50, 50, 0.5);
-	box-shadow:         0px 0px 14px rgba(50, 50, 50, 0.5);
-}
-.collection-thumbs.square.grid .minithumb-1 {
-	top:0px;
-	left:0px;
-}
-.collection-thumbs.square.grid .minithumb-2 {
-	top:25px;
-	left:50px;
-}
-.collection-thumbs.square.grid .minithumb-3 { 
-	top:50px;
-	left:25px;
 }
 .square.grid > li > .badgethumb > span.detail > span {
 	display:block;
@@ -226,7 +184,7 @@ span.title {
 	display:inline-block;
 	width:100%;
 	font-size:.75em;
-	background-color:#f4f4f4;
+	background-color:rgb(251, 251, 249);
 	border-bottom-left-radius:2px;
 	border-bottom-right-radius:2px;
 	border-top:1px solid #e5e5e5;
@@ -235,120 +193,35 @@ span.title {
 .grid .ui > ul > li {
 	margin-left:0px;
 	float:left;
+	width:50%;
+	height:50px;
+	text-align:center;
 }
 .grid .ui > ul > li > a {
+	margin-top:1.248em;
+}
+.grid .ui > ul > li > a.bdet {
 	display:block;
-	width:100%;
-	height:50px;
-	text-indent:-9000px;
-}
-.grid .ui > ul > li {
-	width:33%;
-}
-.badge_action.bdel,
-.collection_action.cdel, {
-	background-position:center 0px;
-}
-.badge_action.bcol {
-	background-position:center -267px;
-}
-.badge_action.bdet,
-.collection_action.cdet {
-	background-position:center -200px;
-}
-.collection_action.csha {
-	background-position:center -134px;
-}
-.collection_action.cedi {
-	background-position:center -66px;
-}
-.collections .badge-thumbs {
-	margin-left:0px;
-}
-.badge-thumbs.vertical > li {
-	list-style-type:none;
-	margin-bottom:0.625em;
-	position:relative;
-}
-.badge-thumbs.vertical > li > .badgethumb {
-	background-position:12px center;
-	background-repeat:no-repeat;
-	background-color:#fff;
-	display:block;
-	min-height:90px;
-}
-.badge-thumbs.vertical > li > .badgethumb > span {
-	margin-left:75px;
-	padding-top:0.625em;
-	padding-bottom:0.625em;
-}
-.badge-thumbs.vertical > li > .badgethumb span {
-	display:block;
+	margin-top:inherit;
 }
 
-.badge-thumbs.vertical .ui {
-	width:inherit;
-	position:absolute;
-	left:inherit;
-	bottom:0px;
-	right:0px;
-	width:100%;
-	padding-left:70px;
-	padding-right:0.625em;
-}
-.badge-thumbs.vertical .ui > ul {
-	border-radius:2px;
-	border:1px solid #e5e5e5;
-}
-.badge-thumbs.vertical > li > .badgethumb > .detail > .title {
-	line-height:2;
+.badge_action.bdet {
+	background-position:center -200px;
 }
 .fullbadge img {
 	float:right;
+	padding:1.25em;
 }
 .fullbadge p {
 	line-height:1.25em;
 }
-.collection_action {
-	background-repeat:no-repeat;
-	background-image:url("../img/sprite.png");	
+.fullbadge ul {
+	list-style-position:inside;
 }
-.collection_action {
-	height:40px;
-	display:block;
-	float:left;
-	text-indent:-9000px;
-	width:30px;
-}
-h2 .collection_action {
-	float:right;
-	margin-top:8px;
-}
-// public share page ///
-.logged-out.public .square.grid > li > p.badgethumb {
-	background-color:#fff;	
-}
-////////////////////////
-// end backpack proto //
-////////////////////////
 
-////////////////////////
-// beg issuer proto ////
-////////////////////////
-.issuer .badge-thumbs.vertical > li {
-	margin-bottom:0.625em;
-	padding-bottom:0px;
-}
-.issuer.confirm .badge-thumbs.vertical > li > .badgethumb {
-	float:left;
-	width:90%;
-}
-.issuer.confirm .badge-thumbs.vertical > li > span {
-	float:right;
-	display:block;
-	width:10%;
-	background-color:#fff;
-	min-height:90px;
+.bapp.button {
+	background-color:rgb(245, 163, 0);
+	border-color:rgb(218, 133, 6);
 }
 #footer {
 	background-color:#182d39;
@@ -357,5 +230,5 @@ h2 .collection_action {
 	color:#fff;
 }
 ////////////////////////
-// end issuer proto ////
+// end backpack proto //
 ////////////////////////
