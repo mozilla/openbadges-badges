@@ -255,3 +255,16 @@ body {
     margin-bottom: -150px;
   }
 }
+
+#about-openbadges {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
+
+#about-openbadges :link,
+#about-openbadges :visited {
+  color: #FFF;
+  text-decoration: none;
+  font-family: "Open Sans Light", sans-serif;
+}
