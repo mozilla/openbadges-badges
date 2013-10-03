@@ -61,12 +61,9 @@ $(document).ready(function() {
       } 
     return false;
   //Perform action based on clicked Badge UI item
-  } else if (target.hasClass('badge_action')) {
+  } else if (target.hasClass('badge_action') && $('.modalless').length == 0) {
     badgeAction(target);
     if(!target.hasClass('bcol')) return false;
-  } else if (target.hasClass('collection_action')) {
-    collectionAction(target);
-    if(!target.hasClass('csha')) return false;
   } else if (target.hasClass('toggle')) {
     //console.log(hashOrAction);
     $('#'+hashOrAction).fadeToggle();
@@ -99,12 +96,9 @@ $(document).ready(function() {
     ' <ul>';
 
       if(what == 'badge') {
-        if(type == 'bgiv') { output += '<li><a class="badge_action bgiv ' + hash + ' button small" href="#">Give</a></li>' }
-          else {
-             output += '<li><a class="badge_action bapp ' + hash + ' button small" href="#">Apply</a></li>';
-          }
-        output += '<li><a class="badge_action bdet ' + hash + '" href="#">Detail</a></li>';
-
+        output += ''+
+        '<li><a class="badge_action bapp ' + hash + ' button small" href="./badge-x-apply.html">Apply</a></li>'+
+        '<li><a class="badge_action bdet ' + hash + '" href="./badge-x-detail.html">Detail</a></li>';
       } else {
         //future UIs to go here
       }

@@ -58,10 +58,12 @@
 
 @include sticky-footer(54px, "#main", "#main_footer", "#footer");
 ////////////////////////
-// beg backpack proto //
+// beg obb proto ///////
 ////////////////////////
 
-
+.active {
+	opacity:0.5;
+}
 .square.grid .content {
 	font-size:0.85em;
 }
@@ -223,6 +225,9 @@ span.title {
 	background-color:rgb(245, 163, 0);
 	border-color:rgb(218, 133, 6);
 }
+.badgepag .badgeimg {
+	text-align:center;
+}
 #footer {
 	background-color:#182d39;
 }
@@ -230,5 +235,5 @@ span.title {
 	color:#fff;
 }
 ////////////////////////
-// end backpack proto //
+// end obb proto ///////
 ////////////////////////
