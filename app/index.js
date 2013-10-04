@@ -30,10 +30,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', 'home', middleware.redirect('summit.home'));
-app.get('/summit', 'summit.home', views.summit.home);
-app.get('/claim', 'claim.home', views.claim.home);
-app.post('/claim', 'claim.post', views.claim.post);
+app.get('/', 'home', middleware.redirect('summit'));
+app.get('/summit', 'summit', views.summit);
+app.get('/claim', 'claim', views.claim);
+app.post('/claim', 'claim.action', views.processClaim);
 
 app.get('*', views.errors.notFound);
 app.use(views.errors.error);

@@ -1,4 +1,4 @@
-{% extends "send-to-backpack/layout.html" %}
+{% extends "core/layout.html" %}
 
 {% block content %}
 <div>
@@ -13,3 +13,9 @@
   </div>
 </div>
 {% endblock %}
+
+{% block foot -%}
+  {{ super() }}
+  <script type="text/javascript" src="{{ static('/js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ static('/js/send-to-backpack.js') }}"></script>
+{%- endblock %}

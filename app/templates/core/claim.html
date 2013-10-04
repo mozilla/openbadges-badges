@@ -1,4 +1,4 @@
-{% extends "claim/layout.html" %}
+{% extends "core/layout.html" %}
 
 {% block content %}
 <div>
@@ -13,7 +13,7 @@
     <img style="max-width:300px;margin-left:auto;margin-right:auto;display:block" src="{{ badge.image }}"/>
     <h2>Yeah.</h2>
     <p>As if this couldn't get any better, here is a text box where you enter your email and CLAIM THAT THING:</p>
-    <form method="post" action="/claim">
+    <form method="post" action="{{ url('claim.action') }}">
       <input type="hidden" name="code" id="code" value="{{ code }}">
       <label for="email" id="email-label">Enter your email address</label>
       <input type="text" name="email" id="email">

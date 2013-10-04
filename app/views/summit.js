@@ -1,3 +1,3 @@
-exports.home = function (req, res, next) {
+exports = module.exports = function home (req, res, next) {
   return res.render('summit/home.html');
 }
