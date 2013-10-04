@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block head -%}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ static('/css/send-to-backpack.css') }}">
+{%- endblock %}
+
+{% block foot -%}
+  {{ super() }}
+  <script type="text/javascript" src="{{ static('/js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ static('/js/send-to-backpack.js') }}"></script>
+{%- endblock %}
