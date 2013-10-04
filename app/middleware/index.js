@@ -1,6 +1,8 @@
 var clientSessions = require('client-sessions');
 var config = require('../lib/config');
 
+exports.csrf = require('./csrf');
+
 var COOKIE_KEY = config('COOKIE_KEY', 'session');
 var COOKIE_SECRET = config('COOKIE_SECRET');
 

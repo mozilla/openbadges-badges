@@ -21,12 +21,13 @@ require('../lib/router.js')(app);
 var staticDir = path.join(__dirname, '/static');
 var staticRoot = '/static';
 
-app.use(middleware.session());
-
 app.use(express.compress());
 app.use(express.bodyParser());
+app.use(middleware.session());
+app.use(middleware.csrf());
 app.use(flash());
 
+app.use(helpers.addCsrfToken);
 app.use(helpers.addMessages);
 
 app.use(staticRoot, express.static(staticDir));
