@@ -60,7 +60,7 @@ body {
   right: 0;
   top: 0;
   overflow: hidden;
-  background: #CAAB91 url('../images/sun.png') 40% 33% no-repeat;
+  background: #CAAB91 url('../images/summit/sun.png') 40% 33% no-repeat;
 }
 
 .layer.back {
@@ -71,7 +71,7 @@ body {
   bottom: 25%;
   margin-left: -581px;
   margin-bottom: -125px;
-  background: url('../images/mountain-background.png') 50% 50% no-repeat;
+  background: url('../images/summit/mountain-background.png') 50% 50% no-repeat;
 }
 
 .layer.middle {
@@ -82,7 +82,7 @@ body {
   width: 791px;
   margin-right: -400px;
   margin-bottom: -50px;
-  background: url('../images/mountain-right.png') 110% 0 no-repeat;
+  background: url('../images/summit/mountain-right.png') 110% 0 no-repeat;
 }
 
 .layer.front {
@@ -93,7 +93,7 @@ body {
   width: 811px;
   margin-left: -450px;
   margin-bottom: -50px;
-  background: url('../images/mountain-left.png') 10% 0 no-repeat;
+  background: url('../images/summit/mountain-left.png') 10% 0 no-repeat;
 }
 
 .layer.back-clouds,
@@ -112,7 +112,7 @@ body {
 .layer.back-clouds {
   bottom: 500px;
   left: 80%;
-  background: url('../images/cloud3.png');
+  background: url('../images/summit/cloud3.png');
   -webkit-animation-duration: 120s;
   -moz-animation-duration: 120s;
   -o-animation-duration: 120s;
@@ -122,7 +122,7 @@ body {
 .layer.middle-clouds {
   bottom: 350px;
   left: 65%;
-  background: url('../images/cloud2.png');
+  background: url('../images/summit/cloud2.png');
   -webkit-animation-duration: 90s;
   -moz-animation-duration: 90s;
   -o-animation-duration: 90s;
@@ -132,7 +132,7 @@ body {
 .layer.front-clouds {
   bottom: 300px;
   left: 25%;
-  background: url('../images/cloud1.png');
+  background: url('../images/summit/cloud1.png');
   -webkit-animation-duration: 60s;
   -moz-animation-duration: 60s;
   -o-animation-duration: 60s;
@@ -145,13 +145,13 @@ body {
   left: 0;
   width: 100%;
   height: 185px;
-  background: url('../images/mountain-front.png') 50% -10% no-repeat;
+  background: url('../images/summit/mountain-front.png') 50% -10% no-repeat;
 }
 
 .flag {
   width: 118px;
   height: 164px;
-  background: url('../images/flag.png') 50% 50% no-repeat;
+  background: url('../images/summit/flag.png') 50% 50% no-repeat;
   position: absolute;
   bottom: 100%;
   left: 425px;
