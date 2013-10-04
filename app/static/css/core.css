@@ -177,12 +177,54 @@ h4 {
 #content {
   min-height: 300px;
   padding: 5px 0 100px;
-  background: #182d39 50% 100% no-repeat;
+  background: #FFFFFF 50% 100% no-repeat;
+  color: #1f3959;
+}
+
+#content .badge-name {
+  margin-top: 1em;
+  margin-bottom: 0em;
+  font-weight: bolder;
+}
+
+#content .badge-description {
+  margin-top: 0em;
+}
+
+#content .badge-image {
+  width: 80%;
+}
+
+#content button {
+  background-color:#1f3959;
+  border: none;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
+  text-indent:0;
+  color:#ffffff;
+  font-size:35px;
+  font-weight:bold;
+}
+
+#content #send-button {
+  margin-top:50px;
+  width:330px;
+  height:80px;
 }
 
 /* ===[ Claim Codes ]======================================================== */
 
 #claim-form {
   font-size: 1.5em;
-  margin-top: 4em;
+  margin-top: 1.5em;
+}
+
+#claim-form input {
+  width:80%
+}
+
+#claim-form button {
+  position: relative;
+  top: 2px;
 }
