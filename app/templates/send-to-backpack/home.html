@@ -1,0 +1,15 @@
+{% extends "send-to-backpack/layout.html" %}
+
+{% block content %}
+<div>
+  <div id="panel">
+    <h3>Alright, now we're going to push the {{ badge.name }} badge to your backpack</h3>
+    <p>If that's ok with you.</p>
+    <h3>First I want to see the picture again:</h3>
+    <img style="max-width:300px;margin-left:auto;margin-right:auto;display:block" src="{{ badge.image }}"/>
+    <h2>So cool.</h2>
+    <p>Anyway, here's the button that will let you send it to your backpack.  Trust us, it'll be awesome once you get there.</p>
+    <button type="submit" id="send-button" data-assertion-url="{{ badge.assertionUrl }}">Trust us and send it to the backpack</button>
+  </div>
+</div>
+{% endblock %}
