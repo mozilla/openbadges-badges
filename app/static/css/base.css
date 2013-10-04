@@ -100,7 +100,7 @@ body {
 }
 
 .constrained {
-  max-width: 940px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -129,7 +129,7 @@ body {
 }
 
 .intro {
-  font-size: 1.5em;
+  font-size: 1.25em;
   margin: -0.75em 0 0;
 }
 
