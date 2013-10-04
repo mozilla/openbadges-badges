@@ -203,14 +203,15 @@ h4 {
   border-radius:10px;
   text-indent:0;
   color:#ffffff;
-  font-size:35px;
+  font-size:30px;
   font-weight:bold;
+  white-space: nowrap;
 }
 
 #content #send-button {
   margin-top:50px;
-  width:330px;
-  height:80px;
+  width:300px;
+  height:70px;
 }
 
 /* ===[ Claim Codes ]======================================================== */
