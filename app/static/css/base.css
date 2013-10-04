@@ -218,6 +218,62 @@ body {
   margin-top: 5px;
 }
 
+/* ---[ Columns ]------------------------------------------------------------ */
+
+.two-column,
+.three-column {
+  overflow: hidden;
+  margin: 25px 0 0 -25px;
+  padding: 0;
+  list-style: none;
+}
+
+.two-column .column,
+.three-column .column {
+  float: left;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+  border-left: solid 25px transparent;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.two-column .column:nth-child(odd) {
+  clear: both;
+}
+
+.three-column .column {
+  width: 33.33%;
+}
+
+.three-column .column:nth-child(3n+1) {
+  clear: both;
+}
+
+@media all and (max-width: 1000px) {
+  .three-column .column {
+    float: none;
+    width: auto;
+    margin-bottom: 25px;
+  }
+}
+
+@media all and (max-width: 740px) {
+  .two-column,
+  .three-column {
+    margin-left: -10px;
+  }
+
+  .two-column .column,
+  .three-column .column {
+    float: none;
+    width: auto;
+    border-left-width: 10px;
+  }
+}
+
 /* ===[ Header bar ]========================================================= */
 
 #header {

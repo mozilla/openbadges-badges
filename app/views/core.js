@@ -1,4 +1,5 @@
 const openbadger = require('../lib/openbadger');
+const url = require('url');
 const validator = require('validator');
 
 exports.home = function home (req, res, next) {
@@ -6,13 +7,15 @@ exports.home = function home (req, res, next) {
 }
 
 exports.claim = function claim (req, res, next) {
-  var code = (req.query.code||'').replace(/^\s*|\s*$/g, '');
+  var code = (req.query.code||'').trim();
 
   function end (err) {
     if (err)
       req.flash('error', err);
 
-    return res.render('core/claim-new.html', {code: code});
+    return res.render('core/claim-new.html', {
+      code: code
+    });
   }
 
   if (!code)
@@ -28,37 +31,52 @@ exports.claim = function claim (req, res, next) {
     if (!badge)
       return end('Invalid claim code');
 
-    return res.render('core/claim.html', { badge: badge, code: code });
+    return res.render('core/claim.html', {
+      badge: badge,
+      code: code
+    });
   });
 };
 
 exports.processClaim = function processClaim (req, res, next) {
   var code = req.body.code;
   var recipientEmail = req.body.email;
+  var redirect = url.format({
+    pathname: res.locals.url('claim'),
+    query: {code: code}
+  });
+
+  function end (err) {
+    if (err)
+      req.flash('error', err);
+    return res.redirect(redirect);
+  }
 
   try {
     validator.check(recipientEmail, 'Please enter a valid email address.').isEmail();
   } catch (e) {
-    return res.send(500, e.message);
+    return end(e.message);
   }
 
   openbadger.getBadgeFromCode( { code: code, email: recipientEmail }, function(err, data) {
     if (err)
-      return res.send(500, err.message );
+      return end(err.message);
 
     var badge = data.badge;
 
     if (!badge)
-      return res.send(404);
+      return end();
 
     openbadger.claim( { code: code, learner: { email: recipientEmail } }, function(err, data) {
       if (err)
-        return res.send(500, err.message );
+        return end(err.message);
 
       console.log(JSON.stringify(data));
       badge.assertionUrl = data.url;
-
-      res.render('core/send-to-backpack.html', { badge: badge, email: recipientEmail });
+      res.render('core/send-to-backpack.html', {
+        badge: badge,
+        email: recipientEmail
+      });
     });
   });
 };

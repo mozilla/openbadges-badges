@@ -5,7 +5,7 @@
   <p class="intro text-center"><label for="claim-code">Claim your badge!</label></p>
   <form method="get" action="{{ url('claim.action') }}" id="claim-form" class="text-center">
     <p>
-      <input type="text" name="code" id="claim-code" aria-label="Enter your claim code" value="{{ code }}" autofocus>
+      <input type="text" name="code" id="claim-code" aria-label="Enter your claim code" value="{{ code }}" autofocus required>
       <button type="submit">Go</button>
     </p>
   </form>
