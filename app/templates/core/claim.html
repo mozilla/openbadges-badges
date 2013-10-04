@@ -2,22 +2,22 @@
 
 {% block content %}
 <h2 class="text-center">Claim your badge</h2>
-<p class="text-center intro">&ldquo;{{ badge.name }}&rdquo;</p>
+<p class="text-center intro">{{ badge.name }}</p>
 <div class="two-column">
   <div class="column">
     <img style="width: 100%;" src="{{ badge.image }}">
   </div>
   <div class="column">
     <p>{{ badge.description }}</p>
+    <form method="post" action="{{ url('claim.action') }}" id="claim-form" class="text-center">
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <input type="hidden" name="code" value="{{ code }}">
+      <label for="email">Enter your email address</label>
+      <input type="email" name="email" required>
+      <button type="submit">Go</button>
+    </form>
   </div>
 </div>
-<form method="post" action="{{ url('claim.action') }}" id="claim-form" class="text-center">
-  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-  <input type="hidden" name="code" value="{{ code }}">
-  <label for="email">Enter your email address</label>
-  <input type="email" name="email" required>
-  <button type="submit">Go</button>
-</form>
 
 {#
 <div>
