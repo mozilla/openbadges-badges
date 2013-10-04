@@ -1,15 +1,13 @@
 {% extends "core/layout.html" %}
 
 {% block content %}
-<div>
-  <div id="panel">
-    <h3>Alright, now we're going to push the {{ badge.name }} badge to your backpack</h3>
-    <p>If that's ok with you.</p>
-    <h3>First I want to see the picture again:</h3>
-    <img style="max-width:300px;margin-left:auto;margin-right:auto;display:block" src="{{ badge.image }}"/>
-    <h2>So cool.</h2>
-    <p>Anyway, here's the button that will let you send it to your backpack.  Trust us, it'll be awesome once you get there.</p>
-    <button type="submit" id="send-button" data-assertion-url="{{ badge.assertionUrl }}">Trust us and send it to the backpack</button>
+<div class="two-column">
+  <div class="column">
+    <img style="width: 100%;" src="{{ badge.image }}">
+  </div>
+  <div class="column">
+    <p>Congrats! You earned the {{ badge.name }} badge. Now, send it to your Mozilla Badge Backpack. The Backpack allows you to collect and share your badges across the web.</p>
+    <button style="margin-top:2em;margin-left:auto;margin-right:auto;display:block" type="submit" id="send-button" data-assertion-url="{{ badge.assertionUrl }}">Send to Backpack</button>
   </div>
 </div>
 {% endblock %}
