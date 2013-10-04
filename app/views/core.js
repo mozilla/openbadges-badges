@@ -52,6 +52,13 @@ exports.processClaim = function processClaim (req, res, next) {
     return res.redirect(redirect);
   }
 
+  function success(badge) {
+    res.render('core/send-to-backpack.html', {
+      badge: badge,
+      email: recipientEmail
+    });
+  }
+
   try {
     validator.check(recipientEmail, 'Please enter a valid email address.').isEmail();
   } catch (e) {
@@ -68,15 +75,23 @@ exports.processClaim = function processClaim (req, res, next) {
       return end();
 
     openbadger.claim( { code: code, learner: { email: recipientEmail } }, function(err, data) {
-      if (err)
+      if (err && err.message.indexOf('already has badge') <= -1)
         return end(err.message);
 
-      console.log(JSON.stringify(data));
-      badge.assertionUrl = data.url;
-      res.render('core/send-to-backpack.html', {
-        badge: badge,
-        email: recipientEmail
-      });
+      if (err) {
+        // this is kind of annoying.  We might consider changing openbadger such that it still returns the badge instance even if the badge had already been claimed.
+        openbadger.getUserBadge( { id: badge.shortname, email: recipientEmail }, function(err, data) {
+          if (err)
+            return end(err.message);
+
+          badge.assertionUrl = data.badge.assertionUrl;
+          success(badge);
+        });
+      }
+      else {
+        badge.assertionUrl = data.url;
+        success(badge);
+      }
     });
   });
 };
