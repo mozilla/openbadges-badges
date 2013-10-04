@@ -1,38 +1,102 @@
+/* ===[ Fonts ]============================================================== */
+
 @font-face {
-	font-family: "Open Sans Light";
-	font-style: normal;
-	font-weight: normal;
-	src: url("../fonts/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"),
-	     url("../fonts/OpenSans-Light-webfont.woff") format("woff"),
-	     url("../fonts/OpenSans-Light-webfont.ttf") format("truetype"),
-	     url("../fonts/OpenSans-Light-webfont.svg#OpenSansLight") format("svg");
+  font-family: "Open Sans Light";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/OpenSans-Light-webfont.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/OpenSans-Light-webfont.woff") format("woff"),
+       url("../fonts/OpenSans-Light-webfont.ttf") format("truetype"),
+       url("../fonts/OpenSans-Light-webfont.svg#OpenSansLight") format("svg");
 }
 
 @font-face {
-	font-family: "Open Sans";
-	font-style: normal;
-	font-weight: normal;
-	src: url("../fonts/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"),
-	     url("../fonts/OpenSans-Regular-webfont.woff") format("woff"),
-	     url("../fonts/OpenSans-Regular-webfont.ttf") format("truetype"),
-	     url("../fonts/OpenSans-Regular-webfont.svg#OpenSansRegular") format("svg");
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/OpenSans-Regular-webfont.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/OpenSans-Regular-webfont.woff") format("woff"),
+       url("../fonts/OpenSans-Regular-webfont.ttf") format("truetype"),
+       url("../fonts/OpenSans-Regular-webfont.svg#OpenSansRegular") format("svg");
 }
 
 @font-face {
-	font-family: "Open Sans";
-	font-style: normal;
-	font-weight: bold;
-	src: url("../fonts/OpenSans-Semibold-webfont.eot?#iefix") format("embedded-opentype"),
-	     url("../fonts/OpenSans-Semibold-webfont.woff") format("woff"),
-	     url("../fonts/OpenSans-Semibold-webfont.ttf") format("truetype"),
-	     url("../fonts/OpenSans-Semibold-webfont.svg#OpenSansSemibold") format("svg");
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/OpenSans-Semibold-webfont.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/OpenSans-Semibold-webfont.woff") format("woff"),
+       url("../fonts/OpenSans-Semibold-webfont.ttf") format("truetype"),
+       url("../fonts/OpenSans-Semibold-webfont.svg#OpenSansSemibold") format("svg");
 }
 
+/* ===[ Reset ]============================================================== */
+
+html,
 body {
-	font-family: "Open Sans", sans-serif;
-	color: #F0F0F0;
   margin: 0;
   padding: 0;
+}
+
+a,
+label.link {
+  color: #b1cf37;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+h2,
+h3,
+h4 {
+  font-weight: normal;
+  margin: 2em 0 1em;
+  clear: both;
+}
+
+h2 {
+  font-size: 2.75em;
+}
+
+h3 {
+  font-size: 1.95em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+p {
+  font-size: 1em;
+  margin: 1.5em 0 0;
+  line-height: 1.5em;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+@media all and (max-width: 740px) {
+  h2 {
+    margin-top: 1em;
+  }
+}
+
+@media all and (max-width: 400px) {
+  h2 {
+    font-size: 1.95em;
+  }
+
+  h3 {
+    font-size: 1.55em;
+  }
+}
+
+/* ===[ Base styles ]======================================================== */
+
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #F0F0F0;
 }
 
 .constrained {
@@ -41,47 +105,131 @@ body {
   padding: 0 20px;
 }
 
-#tabzilla-panel {
-  z-index: 1000;
+@media all and (max-width: 400px) {
+  .constrained {
+    padding: 0 10px;
+  }
 }
 
-#top-bar {
-  /*
-  background: #333;
-  min-height: 29px;
-  line-height: 29px;
-  */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-hidden {
+  position: absolute;
+  left: -999em;
+}
+
+.intro {
+  font-size: 1.5em;
+  margin: -0.75em 0 0;
+}
+
+.tagline {
+  font-size: 1.5em;
+  margin: -2em 0 0;
+  font-style: italic;
+}
+
+.reduced {
+  font-size: 0.78em;
+}
+
+/* ---[ Alerts ]------------------------------------------------------------- */
+
+.alert {
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcefd4;
+  border: 1px solid #fae1c6;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.alert,
+.alert .title {
+  color: #eca918;
+}
+
+.alert .title {
+  margin: 0;
+}
+
+.alert .close {
   position: relative;
-  color: #EEE;
-  position: relative;
-  z-index: 1000;
+  top: -2px;
+  right: -21px;
+  line-height: 20px;
+}
+
+.alert-success {
+  background-color: #caeecf;
+  border-color: #b7e8b6;
+  color: #38b44a;
+}
+
+.alert-success .title {
+  color: #38b44a;
+}
+
+.alert-danger,
+.alert-error {
+  background-color: #fadfdd;
+  border-color: #f8d0d4;
+  color: #df382c;
+}
+
+.alert-danger .title,
+.alert-error .title {
+  color: #df382c;
+}
+
+.alert-info {
+  background-color: #e7b8d1;
+  border-color: #de9ecb;
+  color: #772953;
+}
+
+.alert-info .title {
+  color: #772953;
+}
+
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0;
+}
+
+.alert-block p + p {
+  margin-top: 5px;
+}
+
+/* ===[ Header bar ]========================================================= */
+
+#header {
   border-top: solid 2px #FFF;
 }
 
-#top-bar :link,
-#top-bar :visited {
+#header :link,
+#header :visited {
   color: inherit;
   text-decoration: none;
 }
 
-#openbadges {
-  position: absolute;
-  left: -100%;
+#tabzilla-panel {
+  z-index: 1000;
 }
-
-/*
-#top-bar:after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0)));
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  background-image: linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-}
-*/

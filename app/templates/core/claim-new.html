@@ -1,0 +1,12 @@
+{% extends "core/layout.html" %}
+
+{% block content %}
+  <h2 class="text-center">Got a claim code?</h2>
+  <p class="intro text-center"><label for="claim-code">Claim your badge!</label></p>
+  <form method="get" action="{{ url('claim.action') }}" id="claim-form" class="text-center">
+    <p>
+      <input type="text" name="code" id="claim-code" aria-label="Enter your claim code" value="{{ code }}" autofocus>
+      <button type="submit">Go</button>
+    </p>
+  </form>
+{% endblock %}

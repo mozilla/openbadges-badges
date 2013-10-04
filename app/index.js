@@ -4,6 +4,8 @@ if (process.env.NEW_RELIC_HOME) {
 
 const config = require('./lib/config');
 const express = require('express');
+const flash = require('connect-flash');
+const helpers = require('./helpers');
 const middleware = require('./middleware');
 const nunjucks = require('nunjucks');
 const path = require('path');
@@ -19,8 +21,14 @@ require('../lib/router.js')(app);
 var staticDir = path.join(__dirname, '/static');
 var staticRoot = '/static';
 
+app.use(middleware.session());
+
 app.use(express.compress());
 app.use(express.bodyParser());
+app.use(flash());
+
+app.use(helpers.addMessages);
+
 app.use(staticRoot, express.static(staticDir));
 
 app.use(function (req, res, next) {

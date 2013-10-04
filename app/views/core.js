@@ -6,17 +6,27 @@ exports.home = function home (req, res, next) {
 }
 
 exports.claim = function claim (req, res, next) {
-  var code = req.query.code;
+  var code = (req.query.code||'').replace(/^\s*|\s*$/g, '');
+
+  function end (err) {
+    if (err)
+      req.flash('error', err);
+
+    return res.render('core/claim-new.html', {code: code});
+  }
+
+  if (!code)
+    return end();
 
   openbadger.getBadgeFromCode( { code: code, email: '' }, function(err, data) {
     if (err && err.message.indexOf('already has badge') <= -1)
       // should probably send back to the summit page with an error message
-      return res.send(500, err.message );
+      return end(err.message);
 
     var badge = data.badge;
 
     if (!badge)
-      return res.send(404);
+      return end('Invalid claim code');
 
     return res.render('core/claim.html', { badge: badge, code: code });
   });

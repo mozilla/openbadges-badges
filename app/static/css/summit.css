@@ -51,6 +51,21 @@ body {
   background: #23230F;
 }
 
+#header {
+  z-index: 1000;
+  position: relative;
+  overflow: hidden;
+}
+
+#header h1 {
+  margin: 0;
+}
+
+#home {
+  position: absolute;
+  left: -100%;
+}
+
 #scene {
   position: absolute;
   height: 100%;

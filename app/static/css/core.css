@@ -1,7 +1,188 @@
+/* ===[ Core ]=============================================================== */
+
 body {
-    color: #000000;
+  font-family: "Open Sans Light", sans-serif;
+  font-size: 18px;
+  background: #000B19;
+  color: #F0F0F0;
 }
 
-.title {
+h4 {
+  color: #5fc9e5;
+}
+
+/* ===[ Header/Footer ]====================================================== */
+
+#header {
+  background: #e6e7e8;
+  border-top: solid 2px #FFF;
+  border-bottom: solid 6px #5fc9e5;
+  position: relative;
+}
+
+#header :link,
+#header :visited {
+  color: #073A5A;
+}
+
+#footer {
+  position: relative;
+  border-top: solid 6px #5fc9e5;
+  padding: 20px 0;
+}
+
+#footer a {
+  color: inherit;
+}
+
+#header .constrained,
+#footer .constrained {
+  overflow: hidden;
+}
+
+#header a,
+#footer a {
+  text-decoration: none;
+}
+
+#header::before,
+#header::after,
+#footer::before,
+#footer::after {
+  content: "";
+  height: 6px;
+  width: 33.33%;
+  position: absolute;
+  left: 33.33%;
+  background: #b1cf37;
+}
+
+#header::before,
+#header::after {
+  bottom: -6px;
+}
+
+#footer::before,
+#footer::after {
+  top: -6px;
+}
+
+#header::after,
+#footer::after {
+  left: 66.66%;
+  background: #f48123;
+}
+
+/* ---[ Etc. ]--------------------------------------------------------------- */
+
+#tabzilla {
+  margin-top: -28px;
+}
+
+#header h1,
+#footer .footnote,
+#footer .support {
+  margin: 0;
+  padding: 28px 0;
+}
+
+#home,
+#footer .footnote a {
+  display: block;
+  width: 300px;
+  height: 80px;
+  background: url("../images/logo.png");
+  text-indent: -100%;
+  overflow: hidden;
+  margin-left: -14px;
+}
+
+#footer .footnote a {
+  background-position: 0 -80px;
+}
+
+#footer .support {
+  height: 80px;
+  line-height: 20px;
+  padding-top: 0;
+}
+
+#footer .support img {
+  margin-top: -35px;
+  height: 80px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-left: 1em;
+}
+
+/* ---[ Navigation ]--------------------------------------------------------- */
+
+#header nav,
+#footer nav {
+  float: right;
+  margin-top: -45px;
+}
+
+#header nav.secondary,
+#footer nav.secondary {
+  margin-top: -60px;
+}
+
+#header nav ul,
+#footer nav ul {
+  margin: -1em 0 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1em;
+}
+
+#header nav li,
+#footer nav li {
+  float: left;
+  margin-left: 1.5em;
+}
+
+@media all and (max-width: 1000px) {
+  #header nav,
+  #footer nav {
+    float: none;
+    clear: both;
+    margin: 0;
+  }
+
+  #header nav.secondary,
+  #footer nav.secondary {
+    margin-top: -35px;
+  }
+
+  #header nav ul,
+  #footer nav ul {
+    overflow: hidden;
     text-align: center;
+    line-height: 1.5em;
+    padding-bottom: 1.5em;
+  }
+
+  #header nav li,
+  #footer nav li {
+    float: none;
+    display: inline-block;
+    margin: 0 0.75em;
+  }
+
+}
+
+/* ===[ Main Content ]======================================================= */
+
+#content {
+  min-height: 300px;
+  padding: 5px 0 100px;
+  background: #182d39 50% 100% no-repeat;
+}
+
+/* ===[ Claim Codes ]======================================================== */
+
+#claim-form {
+  font-size: 1.5em;
+  margin-top: 4em;
 }

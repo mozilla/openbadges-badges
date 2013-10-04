@@ -23,6 +23,7 @@
           var label = document.getElementById('claim-code-label');
           if ('placeholder' in box) {
             box.placeholder = label.innerHTML;
+            box.setAttribute('aria-label', label.innerHTML);
             label.parentNode.removeChild(label);
           }
         })();

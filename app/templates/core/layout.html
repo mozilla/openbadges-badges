@@ -1,6 +1,39 @@
 {% extends "layout.html" %}
 
+{% macro navigation () %}
+  <ul>
+    <li><a href="{{ url('claim') }}">Claim</a></li>
+    <li><a href="http://openbadges.org">About</a></li>
+  </ul>
+{% endmacro %}
+
 {% block head -%}
   {{ super() }}
   <link rel="stylesheet" href="{{ static('/css/core.css') }}">
 {%- endblock %}
+
+{% block header %}
+  {{ super() }}
+  <nav id="navigation">
+    {{ navigation() }}
+  </nav>
+{% endblock %}
+
+{% block footer %}
+  {#
+  <section>
+    <p class="footnote"><a href="http://openbadges.org">Mozilla Open Badges</a></p>
+    <nav class="primary">
+      {{ navigation() }}
+    </nav>
+  </section>
+  #}
+  {#
+  <section>
+    <nav class="secondary">
+      <ul class="menu">
+      </ul>
+    </nav>
+  </section>
+  #}
+{% endblock %}

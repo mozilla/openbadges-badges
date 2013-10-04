@@ -12,11 +12,14 @@
   },
   "dependencies": {
     "aestimia-client": "~0.1.4",
+    "client-sessions": "0.3.1",
+    "connect-flash": "~0.1.1",
     "express": "~3.4.0",
     "node-mandrill": "~1.0.1",
     "nunjucks": "~0.1.10",
     "openbadger-client": "~0.1.3",
     "optimist": "~0.6.0",
+    "underscore": "~1.4.4",
     "validator": "~1.5.1"
   },
   "devDependencies": {
