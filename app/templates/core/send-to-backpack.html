@@ -10,13 +10,10 @@
   <div class="column">
     <h3 class="badge-name">{{ badge.name }}</h3>
     <p class="badge-description">{{ badge.description }}</p>
-    <button type="submit" id="send-button" data-assertion-url="{{ badge.assertionUrl }}">Send to Backpack</button>
+    <form method="post" action="http://backpack.openbadges.org/issuer/frameless" target="_blank" id="claim-form">
+      <input type="hidden" name="assertions" value="{{ badge.assertionUrl }}">
+      <button type="submit" class="large-button">Send to Backpack</button>
+    </form>
   </div>
 </div>
 {% endblock %}
-
-{% block foot -%}
-  {{ super() }}
-  <script type="text/javascript" src="{{ static('/js/jquery.min.js') }}"></script>
-  <script type="text/javascript" src="{{ static('/js/send-to-backpack.js') }}"></script>
-{%- endblock %}

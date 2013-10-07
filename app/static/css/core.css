@@ -208,7 +208,7 @@ h4 {
   white-space: nowrap;
 }
 
-#content #send-button {
+#content button.large-button {
   margin-top:50px;
   width:300px;
   height:70px;
