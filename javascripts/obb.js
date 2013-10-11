@@ -83,6 +83,18 @@ $(document).ready(function() {
     makeReveal(retrieveBadge($('input[name=claimid]').val()));
   } else {
     makeAlert('Please enter a claim code.','alert')
+    } 
+  } else if (target.hasClass('bsubmit')) {
+    if($('input[name=email]').val().length && $('textarea[name=detail]').val().length) {
+    makeAlert('Your entry has been submitted for review.');
+
+    if($('.modalless').length == 0) {
+      $('#badge_modal').remove();
+    }
+
+  } else {
+    makeAlert('Please complete the form.','alert');
+    return false;
   }
 
   } else {
@@ -270,10 +282,10 @@ function retrieveApply(hash) {
   '<h4>Check out the criteria for this badge before you begin:</h4>' +
   '<ul><li>Some criteria</li><li>Some criteria</li><li>Some criteria</li></ul>' +
   '<h4>Tell us more about your work:</h4>' +
-  '<textarea></textarea>' +
+  '<textarea name="detail"></textarea>' +
   '<h4>Your E-mail:</h4>' +
-  '<input type="text">' +
-  '<a class="badge_action bsub badgehash-d button medium" href="#">Submit</a>'+
+  '<input name="email" type="text">' +
+  '<a class="bsubmit button medium" href="#">Submit</a>'+
   '<br>Link: <a target=_blank href="http://proto.ballard.is'+docroot+'/'+'#badgedetail='+hash+'">http://proto.ballard.is/'+docroot+'/'+'#badgedetail='+hash+'</a>'
   '</div>';
   return output;
