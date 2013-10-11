@@ -7243,27 +7243,34 @@ html, body {
   height: 54px;
 }
 
-/* line 64, ../sass/app.scss */
+/* line 63, ../sass/app.scss */
+.closereveal {
+  position: absolute;
+  top: 1.25em;
+  right: 1.25em;
+}
+
+/* line 68, ../sass/app.scss */
 .active {
   opacity: 0.5;
 }
 
-/* line 67, ../sass/app.scss */
+/* line 71, ../sass/app.scss */
 .square.grid .content {
   font-size: 0.85em;
 }
 
-/* line 70, ../sass/app.scss */
+/* line 74, ../sass/app.scss */
 .square.grid .detail {
   padding: 0.8em;
 }
 
-/* line 73, ../sass/app.scss */
+/* line 77, ../sass/app.scss */
 .ui > ul > li > a.badge_action {
   text-align: center;
 }
 
-/* line 76, ../sass/app.scss */
+/* line 80, ../sass/app.scss */
 .ui > ul > li > a.badge_action.bdet {
   background-image: url("../img/sprite.png");
   background-repeat: no-repeat;
@@ -7271,54 +7278,54 @@ html, body {
   height: 50px;
 }
 
-/* line 82, ../sass/app.scss */
+/* line 86, ../sass/app.scss */
 .ui {
   z-index: 2;
 }
 
-/* line 85, ../sass/app.scss */
+/* line 89, ../sass/app.scss */
 .ui li {
   list-style-type: none;
 }
 
-/* line 88, ../sass/app.scss */
+/* line 92, ../sass/app.scss */
 .ui .f-dropdown > li > a.brfc {
   float: left;
   margin-right: 1.25em;
 }
 
-/* line 92, ../sass/app.scss */
+/* line 96, ../sass/app.scss */
 .ui .f-dropdown > li > a:hover {
   text-decoration: underline;
 }
 
-/* line 95, ../sass/app.scss */
+/* line 99, ../sass/app.scss */
 .ui .f-dropdown > li hr {
   margin: 0.625em 0;
 }
 
-/* line 98, ../sass/app.scss */
+/* line 102, ../sass/app.scss */
 .ui .submenu li:hover a {
   background-color: #fff;
 }
 
-/* line 101, ../sass/app.scss */
+/* line 105, ../sass/app.scss */
 .ui .f-dropdown {
   padding-top: 0.625em;
   padding-bottom: 0.625em;
 }
 
-/* line 105, ../sass/app.scss */
+/* line 109, ../sass/app.scss */
 .ui input {
   max-width: 175px;
 }
 
-/* line 108, ../sass/app.scss */
+/* line 112, ../sass/app.scss */
 #badge_modal {
   display: none;
 }
 
-/* line 112, ../sass/app.scss */
+/* line 116, ../sass/app.scss */
 #badge_modal_inner {
   position: absolute;
   z-index: 3;
@@ -7330,7 +7337,7 @@ html, body {
   padding: 1.25em;
 }
 
-/* line 122, ../sass/app.scss */
+/* line 126, ../sass/app.scss */
 #badge_modal_inner .close {
   position: absolute;
   top: 0;
@@ -7338,7 +7345,7 @@ html, body {
   padding: 1.25em;
 }
 
-/* line 128, ../sass/app.scss */
+/* line 132, ../sass/app.scss */
 .alert-box {
   position: fixed;
   top: 0;
@@ -7348,22 +7355,22 @@ html, body {
   display: none;
 }
 
-/* line 140, ../sass/app.scss */
+/* line 144, ../sass/app.scss */
 span.title {
   font-size: 1.4em;
 }
 
-/* line 143, ../sass/app.scss */
+/* line 147, ../sass/app.scss */
 .square.grid {
   position: relative;
 }
 
-/* line 146, ../sass/app.scss */
+/* line 150, ../sass/app.scss */
 .square.grid > li {
   position: relative;
 }
 
-/* line 149, ../sass/app.scss */
+/* line 153, ../sass/app.scss */
 .square.grid > li > a {
   position: relative;
   display: block;
@@ -7374,12 +7381,12 @@ span.title {
   overflow: hidden;
 }
 
-/* line 158, ../sass/app.scss */
+/* line 162, ../sass/app.scss */
 .square.grid > li > .badgethumb > span.detail {
   display: block;
 }
 
-/* line 161, ../sass/app.scss */
+/* line 165, ../sass/app.scss */
 .square.grid > li > a > span.detail {
   position: absolute;
   top: 150px;
@@ -7389,18 +7396,18 @@ span.title {
   background: rgba(240, 238, 224, 0.9);
 }
 
-/* line 169, ../sass/app.scss */
+/* line 173, ../sass/app.scss */
 .square.grid > li > .badgethumb {
   background-position: center 1.5em;
   background-repeat: no-repeat;
 }
 
-/* line 173, ../sass/app.scss */
+/* line 177, ../sass/app.scss */
 .square.grid > li > .badgethumb > span.detail > span {
   display: block;
 }
 
-/* line 176, ../sass/app.scss */
+/* line 180, ../sass/app.scss */
 .square.grid .ui {
   display: none;
   position: absolute;
@@ -7410,7 +7417,7 @@ span.title {
   padding: 0 0.625em;
 }
 
-/* line 184, ../sass/app.scss */
+/* line 188, ../sass/app.scss */
 .grid .ui > ul {
   margin-left: 0px;
   display: inline-block;
@@ -7423,7 +7430,7 @@ span.title {
   margin-top: -1px;
 }
 
-/* line 195, ../sass/app.scss */
+/* line 199, ../sass/app.scss */
 .grid .ui > ul > li {
   margin-left: 0px;
   float: left;
@@ -7432,55 +7439,60 @@ span.title {
   text-align: center;
 }
 
-/* line 202, ../sass/app.scss */
+/* line 206, ../sass/app.scss */
+.modalless .grid .ui > ul > li {
+  width: 100%;
+}
+
+/* line 209, ../sass/app.scss */
 .grid .ui > ul > li > a {
   margin-top: 1.248em;
 }
 
-/* line 205, ../sass/app.scss */
+/* line 212, ../sass/app.scss */
 .grid .ui > ul > li > a.bdet {
   display: block;
   margin-top: inherit;
 }
 
-/* line 210, ../sass/app.scss */
+/* line 217, ../sass/app.scss */
 .badge_action.bdet {
   background-position: center -200px;
 }
 
-/* line 213, ../sass/app.scss */
+/* line 220, ../sass/app.scss */
 .fullbadge img {
   float: right;
   padding: 1.25em;
 }
 
-/* line 217, ../sass/app.scss */
+/* line 224, ../sass/app.scss */
 .fullbadge p {
   line-height: 1.25em;
 }
 
-/* line 220, ../sass/app.scss */
+/* line 227, ../sass/app.scss */
 .fullbadge ul {
   list-style-position: inside;
 }
 
-/* line 224, ../sass/app.scss */
+/* line 231, ../sass/app.scss */
 .bapp.button {
   background-color: #f5a300;
   border-color: #da8506;
 }
 
-/* line 228, ../sass/app.scss */
+/* line 235, ../sass/app.scss */
 .badgepag .badgeimg {
   text-align: center;
 }
 
-/* line 231, ../sass/app.scss */
+/* line 238, ../sass/app.scss */
 #footer {
   background-color: #182d39;
 }
 
-/* line 234, ../sass/app.scss */
+/* line 241, ../sass/app.scss */
 #footer > .row {
   color: #fff;
 }

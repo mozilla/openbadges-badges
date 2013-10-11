@@ -60,7 +60,11 @@
 ////////////////////////
 // beg obb proto ///////
 ////////////////////////
-
+.closereveal {
+	position:absolute;
+	top:1.25em;
+	right:1.25em;
+}
 .active {
 	opacity:0.5;
 }
@@ -199,6 +203,9 @@ span.title {
 	height:50px;
 	text-align:center;
 }
+.modalless .grid .ui > ul > li {
+	width:100%;
+}
 .grid .ui > ul > li > a {
 	margin-top:1.248em;
 }
@@ -234,6 +241,7 @@ span.title {
 #footer > .row {
 	color:#fff;
 }
+
 ////////////////////////
 // end obb proto ///////
 ////////////////////////

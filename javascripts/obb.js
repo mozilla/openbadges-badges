@@ -10,7 +10,6 @@ $(document).ready(function() {
   //the click function for lists of badge thumbnails
   $( 'body' ).delegate( "a", "click", function() {
 
-
     var target = $( this );
     var hashOrAction = $( this ).attr('class').split(' ')[1];
     var ui = 0;
@@ -19,7 +18,7 @@ $(document).ready(function() {
     
     //close reveal
     if (target.hasClass('closereveal')) {
-      $('#myModal').foundation('reveal', 'close');
+      $('#reveal').foundation('reveal', 'close');
     }
     //Display badge content and BadgeUI for clicked badge
     if (ui != 0) {
@@ -78,6 +77,14 @@ $(document).ready(function() {
 
     return false;
   } else if (target.hasClass('replaceModal')) {
+ 
+  } else if (target.hasClass('submitcode')) {
+    if($('input[name=claimid]').val().length) {
+    makeReveal(retrieveBadge($('input[name=claimid]').val()));
+  } else {
+    makeAlert('Please enter a claim code.','alert')
+  }
+
   } else {
     console.log('some other link');
   }
@@ -96,9 +103,15 @@ $(document).ready(function() {
     ' <ul>';
 
       if(what == 'badge') {
+        if($('.modalless').length != 0) {
+        output += ''+
+        '<li><a class="badge_action bapp ' + hash + ' button small" href="./badge-x-detail.html">View</a></li>';
+        }
+        else {
         output += ''+
         '<li><a class="badge_action bapp ' + hash + ' button small" href="./badge-x-detail.html#apply">Apply</a></li>'+
         '<li><a class="badge_action bdet ' + hash + '" href="./badge-x-detail.html">Detail</a></li>';
+        }
       } else {
         //future UIs to go here
       }
@@ -217,7 +230,8 @@ $(document).ready(function() {
   }
 
   function makeReveal(content){
-    $('#myModal').html(content).foundation('reveal', 'open');
+    var reveal = $('<div id="reveal" class="reveal-modal"></div>');
+    reveal.append('<a href="#" class="closereveal">×</a>',content).appendTo('body').foundation('reveal','open');
   }
 
   //a function to return the number of list items in a row (good for responsive lists)
@@ -240,7 +254,7 @@ $(document).ready(function() {
 function retrieveBadge(hash) {
 
   var output = '<div class="fullbadge">' +
-  '<h3>Some Badge</h3>' +
+  '<h3>' + hash + ' Badge</h3>' +
   '<img src="' + docroot + '/img/badge/badgehash-x-l.png">' +
   '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>' +
   '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>' +
