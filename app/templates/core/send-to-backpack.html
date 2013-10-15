@@ -3,11 +3,11 @@
 {% block content %}
 <h3 class="">Congratulations!  You earned a badge.</h3>
 <p class="intro">Now, send it to your Mozilla Badge Backpack. The Backpack allows you to collect and share your badges across the web.</p>
-<div class="two-column">
-  <div class="column">
+<div class="grid-wrapper">
+  <div class="grid-item width-three-fifths width-full-when-small">
     <img class="badge-image" src="{{ badge.image }}">
   </div>
-  <div class="column">
+  <div class="grid-item width-two-fifths width-full-when-small">
     <h3 class="badge-name">{{ badge.name }}</h3>
     <p class="badge-description">{{ badge.description }}</p>
     <form method="post" action="http://backpack.openbadges.org/issuer/frameless" target="_blank" id="claim-form">

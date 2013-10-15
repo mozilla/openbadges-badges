@@ -2,11 +2,11 @@
 
 {% block content %}
 <h2 class="text-center">Claim your badge</h2>
-<div class="two-column">
-  <div class="column">
+<div class="grid-wrapper all-width-one-half all-width-full-when-small">
+  <div class="grid-item">
     <img class="badge-image" src="{{ badge.image }}">
   </div>
-  <div class="column">
+  <div class="grid-item">
     <h3 class="badge-name">{{ badge.name }}</h3>
     <p class="badge-description">{{ badge.description }}</p>
     <form method="post" action="{{ url('claim.action') }}" id="claim-form" class="text-center">
@@ -18,28 +18,4 @@
     </form>
   </div>
 </div>
-
-{#
-<div>
-  <div id="panel">
-    <h1 class="title">Check it out</h1>
-    <h2>This is a web page where you push a thing to your backpack</h2>
-    <p>Let's kick this bad boy off with a description of the {{ badge.name }} badge that you just earned.</p>
-    <p>Here it is:</p>
-    <p style="text-align:center;color:blue">{{ badge.description }}</p>
-    <h3>Man, that was awesome.</h3>
-    <p>Now <b>this</b> is happening:</p>
-    <img style="max-width:300px;margin-left:auto;margin-right:auto;display:block" src="{{ badge.image }}"/>
-    <h2>Yeah.</h2>
-    <p>As if this couldn't get any better, here is a text box where you enter your email and CLAIM THAT THING:</p>
-    <form method="post" action="{{ url('claim.action') }}">
-      <input type="hidden" name="code" id="code" value="{{ code }}">
-      <label for="email" id="email-label">Enter your email address</label>
-      <input type="text" name="email" id="email">
-      <button type="submit">CLAIM THAT THING</button>
-    </form>
-    <h3>That's the end of my web page</h3>
-  </div>
-</div>
-#}
 {% endblock %}
