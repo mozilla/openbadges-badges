@@ -229,3 +229,26 @@ h4 {
   position: relative;
   top: 2px;
 }
+
+/* ===[ Badges ]============================================================= */
+
+/* ---[ Thumbnails ]--------------------------------------------------------- */
+
+.badge-thumb {
+  width: 100%;
+}
+
+.badge-thumb > a {
+  text-decoration: none;
+}
+
+.badge-thumb .title {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.badge-thumb .image {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}

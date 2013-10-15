@@ -1,5 +1,7 @@
 var clientSessions = require('client-sessions');
 var config = require('../lib/config');
+var formatUrl = require('url').format;
+var parseUrl = require('url').parse;
 
 exports.csrf = require('./csrf');
 
@@ -28,6 +30,18 @@ exports.redirect = function (target, params, status) {
       var url = res.locals.url(target, params);
     } catch (e) {
       var url = target;
+    }
+
+    if (params._qsa && req.query) {
+      url = parseUrl(url, true);
+      if (!url.query) url.query = {};
+
+      Object.keys(req.query).forEach(function(key) {
+        if (!url.query.hasOwnProperty(key))
+          url.query[key] = req.query[key];
+      });
+
+      url = formatUrl(url);
     }
 
     return res.redirect(status || 302, url);

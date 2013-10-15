@@ -39,10 +39,12 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get('/', 'home', middleware.redirect('summit'));
+app.get('/', 'home', views.home);
 app.get('/summit', 'summit', views.summit);
 app.get('/claim', 'claim', views.claim);
 app.post('/claim', 'claim.action', views.processClaim);
+app.get('/badges', 'badges', views.badges.listAll);
+app.get('/badges/:badgeId', 'badge', views.badges.single);
 
 app.get('*', views.errors.notFound);
 app.use(views.errors.error);
