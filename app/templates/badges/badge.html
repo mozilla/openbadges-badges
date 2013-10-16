@@ -1,0 +1,59 @@
+{% extends "badges/layout.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+
+    <h3>{{ badge.name }}</h3>
+
+    <ul class="small-block-grid-1 large-block-grid-2">
+      <li class="badgedet">
+        <div class="fullbadge">
+          <p>{{ badge.description }}</p>
+        </div>
+        <div class="fullbadge">
+          <a id="apply"><h3>Apply for this badge?</h2></a>
+          <h5>Check out the criteria for this badge before you apply:</h4>
+            {{ badge.criteria }}
+            <h5>Tell us more about your work:</h4>
+              <textarea name="detail"></textarea>
+              <h5>Your E-mail:</h4>
+                <input name="email" type="text">
+                <a class="bsubmit button small" href="#">Submit Application</a>
+        </div>
+      </li>
+
+      <li>
+        <img class="badgeimg" src="{{ badge.image }}">
+      </li>
+
+      <li class="badgedet">
+
+      </li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+{% if otherBadges %}
+<div class="row">
+  <div class="large-12 columns">
+
+    <h3>Other Badges</h3>
+
+    <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
+      {% for badge in otherBadges %}
+      <li>
+        <a class="badgethumb" data-shortname="{{ badge.shortname }}" href="#" style="background-image:url('{{ badge.image }}');">
+              <span class="detail">
+                <span class="title">{{ badge.name }}</span>
+                <span class="content">{{ badge.description }}</span>
+              </span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

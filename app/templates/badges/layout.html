@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block head -%}
+<meta charset="utf-8">
+<meta content="width=device-width" name="viewport">
+{{ super() }}
+<link href="{{ static('/css/badges.css') }}" rel="stylesheet">
+<script src="{{ foundation('/js/vendor/custom.modernizr.js') }}"></script>
+{%- endblock %}
+
+{% block headerWrapper %}
+{# Empty block to override header #}
+{% endblock %}
+
+{% block contentWrapper %}
+<body class="modalless">
+<div id="main">
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>Mozilla OpenBadges Badges</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="large-12 columns">
+      <nav class="top-bar" style="">
+        <section class="top-bar-section">
+          <ul class="right">
+            <li class="divider hide-for-small"></li>
+            <li class="has-form">
+              <form method="get" action="/claim">
+                <div class="row collapse">
+                  <div class="small-8 columns">
+                    <input name="code" type="text" placeholder="Have a claim code?">
+                  </div>
+                  <div class="small-4 columns">
+                    <button type="submit" class="button submitcode">Claim</button>
+                  </div>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </section>
+      </nav>
+    </div>
+  </div>
+  {% block content %}
+  {% endblock %}
+  <div id="main_footer"></div>
+</div>
+{% endblock %}
+
+{% block foot %}
+<script>
+  document.write("<script src='{{ foundation('/js/vendor') }}" +
+    ('__proto__' in {} ? '/zepto' : '/jquery') +
+    ".js'><\/script>")
+</script>
+<script src="{{ foundation('/js/foundation/foundation.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.abide.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.alerts.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.clearing.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.cookie.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.dropdown.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.forms.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.interchange.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.joyride.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.magellan.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.orbit.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.placeholder.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.reveal.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.section.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.tooltips.js') }}"></script>
+<script src="{{ foundation('/js/foundation/foundation.topbar.js') }}"></script>
+<script>
+  $(document).foundation();
+</script>
+<script src="{{ static('/js/obb.js') }}"></script>
+{% endblock %}

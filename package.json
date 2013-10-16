@@ -4,7 +4,8 @@
   "description": "Mozilla Open Badges issues Open Badges.",
   "main": "app/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/tap-prettify test/*.js"
+    "test": "./node_modules/.bin/tap-prettify test/*.js",
+    "postinstall": "./node_modules/.bin/bower install"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,9 @@
     "openbadger-client": "~0.1.3",
     "optimist": "~0.6.0",
     "underscore": "~1.4.4",
-    "validator": "~1.5.1"
+    "validator": "~1.5.1",
+    "bower": "~1.2.6",
+    "node-sass": "~0.6.6"
   },
   "devDependencies": {
     "tap-prettify": "0.0.2",

@@ -2,6 +2,8 @@ var clientSessions = require('client-sessions');
 var config = require('../lib/config');
 var formatUrl = require('url').format;
 var parseUrl = require('url').parse;
+var sass = require('node-sass');
+var path = require('path');
 
 exports.csrf = require('./csrf');
 
@@ -46,4 +48,13 @@ exports.redirect = function (target, params, status) {
 
     return res.redirect(status || 302, url);
   }
-}
+};
+
+exports.sass = function() {
+  return sass.middleware({
+    root: path.join(__dirname, 'bower_components'),
+    src: 'foundation/scss',
+    dest: 'foundation/css',
+    debug: true
+  });
+};
