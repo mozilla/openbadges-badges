@@ -12,14 +12,19 @@
           <p>{{ badge.description }}</p>
         </div>
         <div class="fullbadge">
-          <a id="apply"><h3>Apply for this badge?</h2></a>
-          <h5>Check out the criteria for this badge before you apply:</h4>
+          <a id="apply"><h3>Apply for this badge?</h3></a>
+          <h5>Check out the criteria for this badge before you apply:</h5>
             {{ badge.criteria }}
-            <h5>Tell us more about your work:</h4>
-              <textarea name="detail"></textarea>
-              <h5>Your E-mail:</h4>
-                <input name="email" type="text">
-                <a class="bsubmit button small" href="#">Submit Application</a>
+            <h5>Tell us more about your work:</h5>
+              <form id="apply-form" action="{{ url('badge.action', {badgeId: badge.id}) }}" method="post">
+                <input type="hidden" name="badgeId" value="{{ badge.id }}">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                <textarea name="description"></textarea>
+                <h5>Your E-mail:</h5>
+                  <input name="email" type="text">
+                  <input type="submit"  class="bsubmit button small" value="Submit Application">
+                  <p id="apply-feedback" style="margin-bottom:11px;color:red;display:none">Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.</p>
+              </form>
         </div>
       </li>
 

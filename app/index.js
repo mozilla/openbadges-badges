@@ -54,6 +54,7 @@ app.get('/claim', 'claim', views.claim);
 app.post('/claim', 'claim.action', views.processClaim);
 app.get('/badges', 'badges', views.badges.listAll);
 app.get('/badges/:badgeId', 'badge', views.badges.single);
+app.post('/badges/:badgeId', 'badge.action', views.badges.apply);
 
 app.get('*', views.errors.notFound);
 app.use(views.errors.error);

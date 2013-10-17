@@ -12,6 +12,9 @@ $(document).ready(function() {
       return false;
     }
   });
+
+  $('#apply-form').on('submit', submitApplication);
+
   //the click function for lists of badge thumbnails
   $( 'body' ).delegate( "a", "click", function() {
     closeAlert();
@@ -82,5 +85,27 @@ $(document).ready(function() {
     closeAlert();
     var alert = '<div data-alert class="alert-box ' + status + '"><span class="content">' + text + '</span><a href="#" class="close">&times;</a></div>';
     $(alert).prependTo($('body')).fadeIn('fast');
+  }
+
+  function submitApplication() {
+    var form = $('#apply-form');
+    var feedback = form.find('#apply-feedback');
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'POST',
+      data: $(this).serialize(),
+      success: function(data, status, xhr) {
+        form.find('input, textarea').attr('disabled', 'disabled');
+        feedback.html(data);
+        form.find('input.button').hide();
+        feedback.show();
+      },
+      error: function(xhr, status, error) {
+        feedback.html(xhr.responseText);
+        feedback.show();
+      }
+    });
+
+    return false;
   }
 });
