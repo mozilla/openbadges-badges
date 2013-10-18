@@ -2,7 +2,7 @@
 
 {% block head -%}
 <meta charset="utf-8">
-<meta content="width=device-width" name="viewport">
+<meta content="width=device-width,initial-scale=1" name="viewport">
 {{ super() }}
 <link href="{{ static('/css/badges.css') }}" rel="stylesheet">
 <script src="{{ foundation('/js/vendor/custom.modernizr.js') }}"></script>
@@ -27,7 +27,7 @@
           <ul class="right">
             <li class="divider hide-for-small"></li>
             <li class="has-form">
-              <form method="get" action="/claim">
+              <form method="get" action="{{ url('claim') }}">
                 <div class="row collapse">
                   <div class="small-8 columns">
                     <input name="code" type="text" placeholder="Have a claim code?">

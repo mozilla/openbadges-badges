@@ -12,18 +12,18 @@
           <p>{{ badge.description }}</p>
         </div>
         <div class="fullbadge">
-          <a id="apply"><h3>Apply for this badge?</h3></a>
-          <h5>Check out the criteria for this badge before you apply:</h5>
+          <h3 id="apply">Apply for this badge?</h3>
+          <h4>Check out the criteria for this badge before you apply:</h4>
             {{ badge.criteria }}
-            <h5>Tell us more about your work:</h5>
-              <form id="apply-form" action="{{ url('badge.action', {badgeId: badge.id}) }}" method="post">
+            <h4>Tell us more about your work:</h4>
+              <form id="apply-form" action="{{ url('badge.apply', {badgeId: badge.id}) }}" method="post">
                 <input type="hidden" name="badgeId" value="{{ badge.id }}">
                 <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                 <textarea name="description"></textarea>
-                <h5>Your E-mail:</h5>
-                  <input name="email" type="text">
+                <h4>Your E-mail:</h4>
+                  <input name="email" type="email">
                   <input type="submit"  class="bsubmit button small" value="Submit Application">
-                  <p id="apply-feedback" style="margin-bottom:11px;color:red;display:none">Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.</p>
+                  <p id="apply-feedback"></p>
               </form>
         </div>
       </li>
@@ -31,16 +31,12 @@
       <li>
         <img class="badgeimg" src="{{ badge.image }}">
       </li>
-
-      <li class="badgedet">
-
-      </li>
     </ul>
   </div>
 </div>
 
-<hr>
 {% if otherBadges %}
+<hr>
 <div class="row">
   <div class="large-12 columns">
 
@@ -49,7 +45,7 @@
     <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
       {% for badge in otherBadges %}
       <li>
-        <a class="badgethumb" data-shortname="{{ badge.shortname }}" href="/badges/{{ badge.shortname }}" style="background-image:url('{{ badge.image }}');">
+        <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.image }}');">
               <span class="detail">
                 <span class="title">{{ badge.name }}</span>
                 <span class="content">{{ badge.description }}</span>

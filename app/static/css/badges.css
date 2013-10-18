@@ -7501,3 +7501,9 @@ span.title {
 #footer > .row {
   color: #fff;
 }
+
+#apply-feedback {
+  color: red;
+  min-height: 1.25em;
+  margin-bottom: 0px;
+}

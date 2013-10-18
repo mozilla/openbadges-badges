@@ -3,7 +3,9 @@ const url = require('url');
 const validator = require('validator');
 
 exports.home = function home (req, res, next) {
-  return res.redirect('badges');
+  openbadger.getBadges(function (err, data) {
+    return res.render('core/home.html', data);
+  });
 }
 
 exports.claim = function claim (req, res, next) {

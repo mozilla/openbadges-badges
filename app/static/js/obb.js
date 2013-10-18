@@ -1,13 +1,9 @@
-var hashParams = {};
-var docroot = '/badges';
-
 $(document).ready(function() {
 
   $('.submitcode').click(function() {
     closeAlert();
 
-    if($('input[name=code]').val().length) {
-    } else {
+    if(!$('input[name=code]').val().length) {
       makeAlert('Please enter a claim code.','alert');
       return false;
     }
@@ -32,7 +28,7 @@ $(document).ready(function() {
       if($('.chosen').length > 0 ) {
         $('.chosen').each(function(){
           var thisTarget = $(this);
-          $(this).find('.detail').animate({
+          thisTarget.find('.detail').animate({
             top: "150px"
           }, 400, "swing", function(){
             thisTarget.removeClass('chosen').parents('li').find('.ui').fadeOut('fast', function() {
@@ -45,7 +41,7 @@ $(document).ready(function() {
       //for square thumbnail badges
       if(target.parents('ul').hasClass('square')){
         if (target.hasClass('chosen')) {
-          $(target).find('.detail').animate({
+          target.find('.detail').animate({
             top: "150px"
           }, 400, "swing", function(){
             target.removeClass('chosen').parents('li').find('.ui').fadeOut('fast', function() {
@@ -53,10 +49,10 @@ $(document).ready(function() {
             });
           });
         } else {
-          $(target).find('.detail').animate({
+          target.find('.detail').animate({
             top: "0px"
           }, 400, "swing", function(){
-            ui = makeUI(target)
+            var ui = makeUI(target)
             target.addClass('chosen').parents('li').append(ui).find('.ui').fadeIn('fast');
           });
         }
@@ -68,8 +64,8 @@ $(document).ready(function() {
 
   //a function to generate the dropdown BadgeUI from the clicked badge hash
   function makeUI(element) {
-    var shortname = element.data('shortname');
-    var output = '<div class="badgeui ui"><ul><li><a class="badge_action bapp button small" href="/badges/' + shortname + '">View</a></li></ul></div>';
+    var href = element.attr('href');
+    var output = '<div class="badgeui ui"><ul><li><a class="badge_action bapp button small" href="' + href + '">View</a></li></ul></div>';
 
     return output;
   }
@@ -88,21 +84,19 @@ $(document).ready(function() {
   }
 
   function submitApplication() {
-    var form = $('#apply-form');
+    var form = $(this);
     var feedback = form.find('#apply-feedback');
     $.ajax({
-      url: $(this).attr('action'),
+      url: form.attr('action'),
       type: 'POST',
-      data: $(this).serialize(),
+      data: form.serialize(),
       success: function(data, status, xhr) {
         form.find('input, textarea').attr('disabled', 'disabled');
         feedback.html(data);
         form.find('input.button').hide();
-        feedback.show();
       },
       error: function(xhr, status, error) {
         feedback.html(xhr.responseText);
-        feedback.show();
       }
     });
 
