@@ -5,49 +5,42 @@
 <meta content="width=device-width,initial-scale=1" name="viewport">
 {{ super() }}
 <link href="{{ static('/css/badges.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ static('/css/core.css') }}">
 <script src="{{ foundation('/js/vendor/custom.modernizr.js') }}"></script>
 {%- endblock %}
-
-{% block headerWrapper %}
-{# Empty block to override header #}
+{% block content %}
+<p class="badgeheader">Badges for doing awesome work with Open Badges.  Yeah, this is meta.</p>
+<form class="claimform" method="get" action="{{ url('claim') }}">
+  <input name="code" type="text" placeholder="Have a claim code? Enter it here.">
+  <button id="submitcode" type="submit" class="button">Claim</button>
+</form>
 {% endblock %}
-
-{% block contentWrapper %}
-<body class="modalless">
-<div id="main">
-  <div class="row">
-    <div class="large-12 columns">
-      <h1>Mozilla OpenBadges Badges</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="large-12 columns">
-      <nav class="top-bar" style="">
-        <section class="top-bar-section">
-          <ul class="right">
-            <li class="divider hide-for-small"></li>
-            <li class="has-form">
-              <form method="get" action="{{ url('claim') }}">
-                <div class="row collapse">
-                  <div class="small-8 columns">
-                    <input name="code" type="text" placeholder="Have a claim code?">
-                  </div>
-                  <div class="small-4 columns">
-                    <button type="submit" class="button submitcode">Claim</button>
-                  </div>
-                </div>
-              </form>
-            </li>
-          </ul>
-        </section>
-      </nav>
-    </div>
-  </div>
-  {% block content %}
-  {% endblock %}
-  <div id="main_footer"></div>
-</div>
+{% block footer %}
+<section>
+  <p class="footnote"><a href="http://openbadges.org">Mozilla Open Badges</a></p>
+  <nav class="primary">
+    <ul id="menu-main-menu-1" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="http://openbadges.org/earn/" >Earn</a></li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-35"><a href="http://openbadges.org/issue/" >Issue</a></li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="http://openbadges.org/display/" >Display</a></li>
+      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-750"><a href="http://community.openbadges.org" >Community</a></li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="http://openbadges.org/press/" >Press</a></li>
+      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-488"><a href="http://openbadges.tumblr.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-menu','http://openbadges.tumblr.com']);">Blog</a></li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="http://openbadges.org/about/" >About</a></li>
+    </ul>					</nav>
+</section>
+<section>
+  <p class="support">
+    Supported by
+    <a href="http://www.macfound.org"><img alt="the MacArthur Foundation" src="http://openbadges.org/wp-content/themes/openbadges2/media/images/partners/MacArthur_logo.png"></a>
+  </p>
+  <nav class="secondary">
+    <ul id="menu-footer-menu" class="menu"><li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28"><a href="http://openbadges.org/legal_faq/" >Implementation FAQ</a></li>
+      <li id="menu-item-26" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26"><a href="http://beta.openbadges.org/privacy.html" >Privacy Policy</a></li>
+      <li id="menu-item-27" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-27"><a href="http://beta.openbadges.org/tou.html" >Terms of Use</a></li>
+    </ul>					</nav>
+</section>
 {% endblock %}
+}
 
 {% block foot %}
 <script>
@@ -74,5 +67,6 @@
 <script>
   $(document).foundation();
 </script>
-<script src="{{ static('/js/obb.js') }}"></script>
+<script src="{{ static('/js/obb.js') }}"></scrip
+<script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js" type="text/javascript"></script>t>
 {% endblock %}

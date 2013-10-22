@@ -52,7 +52,7 @@ exports.single = function (req, res, next) {
 
     var badge = data.badge;
 
-    openbadger.getBadgeRecommendations( { id: id, limit: 12 }, function (err, data) {
+    openbadger.getBadgeRecommendations( { id: id, limit: 4 }, function (err, data) {
       if (err)
         return next(err);
 

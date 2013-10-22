@@ -1,59 +1,51 @@
 {% extends "badges/layout.html" %}
 
 {% block content %}
-<div class="row">
-  <div class="large-12 columns">
-
-    <h3>{{ badge.name }}</h3>
-
-    <ul class="small-block-grid-1 large-block-grid-2">
-      <li class="badgedet">
-        <div class="fullbadge">
-          <p>{{ badge.description }}</p>
-        </div>
-        <div class="fullbadge">
-          <h3 id="apply">Apply for this badge?</h3>
-          <h4>Check out the criteria for this badge before you apply:</h4>
-            {{ badge.criteria }}
-            <h4>Tell us more about your work:</h4>
-              <form id="apply-form" action="{{ url('badge.apply', {badgeId: badge.id}) }}" method="post">
-                <input type="hidden" name="badgeId" value="{{ badge.id }}">
-                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-                <textarea name="description"></textarea>
-                <h4>Your E-mail:</h4>
-                  <input name="email" type="email">
-                  <input type="submit"  class="bsubmit button small" value="Submit Application">
-                  <p id="apply-feedback"></p>
-              </form>
-        </div>
-      </li>
-
-      <li>
-        <img class="badgeimg" src="{{ badge.image }}">
-      </li>
-    </ul>
+{{ super() }}
+<div class="row badgedetails">
+  <div class="large-3 columns">
+      <img class="badgeimg" src="{{ badge.image }}">
+  </div>
+  <div class="large-8 columns">
+    <div class="fullbadge">
+      <h2>{{ badge.name }}</h2>
+      <p>{{ badge.description }}</p>
+      <h3 id="apply">Ready to apply for this badge?</h3>
+      <h4>Here is the criteria for the badge:</h4>
+      <p>{{ badge.criteria }}</p>
+      <h4>Tell us about your work and why you qualify for the badge:</h4>
+      <form id="apply-form" action="{{ url('badge.apply', {badgeId: badge.id}) }}" method="post">
+        <input type="hidden" name="badgeId" value="{{ badge.id }}">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <textarea name="description"></textarea>
+        <h4>Enter your email address here:</h4>
+        <input name="email" type="email">
+        <br>
+        <button type="submit"  class="bsubmit button small">Submit</button>
+        <p id="apply-feedback"></p>
+      </form>
+    </div>
   </div>
 </div>
 
 {% if otherBadges %}
-<hr>
 <div class="row">
   <div class="large-12 columns">
-
-    <h3>Other Badges</h3>
-
+    <h3>More <b>OpenBadges</b> Badges</h3>
     <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
       {% for badge in otherBadges %}
       <li>
         <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.image }}');">
-              <span class="detail">
-                <span class="title">{{ badge.name }}</span>
-                <span class="content">{{ badge.description }}</span>
-              </span>
+          <span class="detail">
+            <span class="content">{{ badge.description }}</span>
+            <span class="badgelink">See all ></span>
+          </span>
         </a>
+        <p class="badgetitle">{{ badge.name }}</p>
       </li>
       {% endfor %}
     </ul>
+    <a class="seeallbadges" href="/badges">See all the badges ></a>
   </div>
 </div>
 {% endif %}

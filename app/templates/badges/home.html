@@ -2,21 +2,21 @@
 
 
 {% block content %}
+{{ super() }}
 <div class="row">
   <div class="large-12 columns">
 
     {% if badges %}
-    <h3>Available Badges</h3>
-
     <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
       {% for badge in badges %}
       <li>
         <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.image }}');">
-            <span class="detail">
-              <span class="title">{{ badge.name }}</span>
-              <span class="content">{{ badge.description }}</span>
-            </span>
+          <span class="detail">
+            <span class="content">{{ badge.description }}</span>
+            <span class="badgelink">See all ></span>
+          </span>
         </a>
+        <p class="badgetitle">{{ badge.name }}</p>
       </li>
       {% endfor %}
     </ul>

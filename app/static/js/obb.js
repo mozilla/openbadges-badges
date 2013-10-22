@@ -1,12 +1,22 @@
 $(document).ready(function() {
 
-  $('.submitcode').click(function() {
+  $('#submitcode').click(function() {
     closeAlert();
 
     if(!$('input[name=code]').val().length) {
       makeAlert('Please enter a claim code.','alert');
       return false;
     }
+  });
+
+  $('.badgelink').click(function() {
+    var target = $(this);
+
+    var detail = target.closest('.badgethumb');
+    var href = detail.attr('href');
+    window.location.href = href;
+    return false;
+
   });
 
   $('#apply-form').on('submit', submitApplication);
@@ -24,51 +34,35 @@ $(document).ready(function() {
 
     //Display badge content and BadgeUI for clicked badge
     if (target.hasClass('badgethumb')) {
+      //for square thumbnail badges
+      if(target.parents('ul').hasClass('square')){
+        var detail = target.find('.detail');
+        if (target.hasClass('chosen')) {
+          detail.fadeOut('fast');
+          target.removeClass('chosen');
+        } else {
+          detail.fadeIn('fast');
+          target.addClass('chosen');
+        }
+      }
+
       //check for other chosen items and close them
       if($('.chosen').length > 0 ) {
         $('.chosen').each(function(){
           var thisTarget = $(this);
-          thisTarget.find('.detail').animate({
-            top: "150px"
-          }, 400, "swing", function(){
-            thisTarget.removeClass('chosen').parents('li').find('.ui').fadeOut('fast', function() {
-              $(this).remove();
-            });
-          });
+          if (target[0] !== thisTarget[0]) {
+            var detail = thisTarget.find('.detail');
+            detail.fadeOut('fast');
+            thisTarget.removeClass('chosen');
+          }
         });
       }
 
-      //for square thumbnail badges
-      if(target.parents('ul').hasClass('square')){
-        if (target.hasClass('chosen')) {
-          target.find('.detail').animate({
-            top: "150px"
-          }, 400, "swing", function(){
-            target.removeClass('chosen').parents('li').find('.ui').fadeOut('fast', function() {
-              $(this).remove();
-            });
-          });
-        } else {
-          target.find('.detail').animate({
-            top: "0px"
-          }, 400, "swing", function(){
-            var ui = makeUI(target)
-            target.addClass('chosen').parents('li').append(ui).find('.ui').fadeIn('fast');
-          });
-        }
-      }
       return false;
       //Perform action based on clicked Badge UI item
     }
   });
 
-  //a function to generate the dropdown BadgeUI from the clicked badge hash
-  function makeUI(element) {
-    var href = element.attr('href');
-    var output = '<div class="badgeui ui"><ul><li><a class="badge_action bapp button small" href="' + href + '">View</a></li></ul></div>';
-
-    return output;
-  }
 
   function closeAlert() {
     if($('.alert-box').length != 0) {
@@ -91,9 +85,9 @@ $(document).ready(function() {
       type: 'POST',
       data: form.serialize(),
       success: function(data, status, xhr) {
-        form.find('input, textarea').attr('disabled', 'disabled');
+        form.find('input, textarea, button').attr('disabled', 'disabled');
         feedback.html(data);
-        form.find('input.button').hide();
+        form.find('button').hide();
       },
       error: function(xhr, status, error) {
         feedback.html(xhr.responseText);
