@@ -1,5 +1,6 @@
 const aestimia = require('../lib/aestimia');
 const config = require('../lib/config');
+const email = require('../lib/email');
 const openbadger = require('../lib/openbadger');
 const url = require('url');
 const validator = require('validator');
@@ -28,6 +29,7 @@ function submitApplication(badge, email, description, callback) {
     criteriaUrl: criteriaUrl,
     description: description,
     evidence: [],
+    meta: { badgeId: badge.id },
     url: criteriaUrl
   });
 
@@ -92,3 +94,29 @@ exports.apply = function apply(req, res, next) {
   // form data in req.body.email and req.body.description
   return res.send(200, 'Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.');
 };
+
+exports.aestimia = aestimia.endpoint(function(submission, next) {
+  openbadger.getBadge(submission.meta.badgeId, function (err, data) {
+    if (err)
+      return next(err);
+
+    var badge = data.badge;
+    var recipient = submission.learner;
+
+    if (submission.accepted) {
+      email.sendApplySuccess(badge, recipient);
+
+      var query = {
+        badge: badge.shortname,
+        learner: {email: recipient}
+      }
+
+      openbadger.awardBadge(query, next);
+    }
+    else {
+      email.sendApplyFailure(badge, recipient);
+    }
+
+    next();
+  });
+});

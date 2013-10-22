@@ -1,3 +1,4 @@
+const email = require('../lib/email');
 const openbadger = require('../lib/openbadger');
 const url = require('url');
 const validator = require('validator');
@@ -91,6 +92,8 @@ exports.processClaim = function processClaim (req, res, next) {
         });
       }
       else {
+        email.sendApplySuccess(badge, recipientEmail);
+
         badge.assertionUrl = data.url;
         success(badge);
       }

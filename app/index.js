@@ -24,19 +24,6 @@ var staticRoot = '/static';
 var foundationDir = path.join(__dirname, '../bower_components/foundation');
 var foundationRoot = '/foundation';
 
-app.use(express.compress());
-app.use(express.bodyParser());
-app.use(middleware.session());
-app.use(middleware.csrf());
-app.use(middleware.sass());
-app.use(flash());
-
-app.use(helpers.addCsrfToken);
-app.use(helpers.addMessages);
-
-app.use(staticRoot, express.static(staticDir));
-app.use(foundationRoot, express.static(foundationDir));
-
 app.use(function (req, res, next) {
   res.locals.static = function static (staticPath) {
     return path.join(app.mountPoint, staticRoot, staticPath);
@@ -48,6 +35,20 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+app.use(express.compress());
+app.use(express.bodyParser());
+app.use(middleware.session());
+app.use(middleware.csrf({ whitelist: ['/aestimia'] }));
+app.use(middleware.sass());
+app.use(flash());
+
+app.use(helpers.addCsrfToken);
+app.use(helpers.addMessages);
+
+app.use(staticRoot, express.static(staticDir));
+app.use(foundationRoot, express.static(foundationDir));
+
 app.get('/', 'home', middleware.redirect('badges', 302));
 app.get('/summit', 'summit', views.summit);
 app.get('/claim', 'claim', views.claim);
@@ -55,6 +56,7 @@ app.post('/claim', 'claim.action', views.processClaim);
 app.get('/badges', 'badges', views.badges.listAll);
 app.get('/badges/:badgeId', 'badge', views.badges.single);
 app.post('/badges/:badgeId', 'badge.apply', views.badges.apply);
+app.use('/aestimia', views.badges.aestimia);
 
 app.get('*', views.errors.notFound);
 app.use(views.errors.error);
