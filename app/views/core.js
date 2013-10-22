@@ -1,5 +1,6 @@
 const email = require('../lib/email');
 const openbadger = require('../lib/openbadger');
+const helpers = require('../helpers');
 const url = require('url');
 const validator = require('validator');
 
@@ -29,7 +30,7 @@ exports.claim = function claim (req, res, next) {
       // should probably send back to the summit page with an error message
       return end(err.message);
 
-    var badge = data.badge;
+    var badge = helpers.splitDescriptions(data.badge);
 
     if (!badge)
       return end('Invalid claim code');
@@ -72,7 +73,7 @@ exports.processClaim = function processClaim (req, res, next) {
     if (err)
       return end(err.message);
 
-    var badge = data.badge;
+    var badge = helpers.splitDescriptions(data.badge);
 
     if (!badge)
       return end();

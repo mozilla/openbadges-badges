@@ -1,9 +1,21 @@
 const aestimia = require('../lib/aestimia');
 const config = require('../lib/config');
 const email = require('../lib/email');
+const helpers = require('../helpers');
 const openbadger = require('../lib/openbadger');
 const url = require('url');
 const validator = require('validator');
+
+function getRandomSubarray(arr, size) {
+  var shuffled = arr.slice(0), i = arr.length, temp, index;
+  while (i--) {
+    index = Math.floor(i * Math.random());
+    temp = shuffled[index];
+    shuffled[index] = shuffled[i];
+    shuffled[i] = temp;
+  }
+  return shuffled.slice(0, size);
+}
 
 function submitApplication(badge, email, description, callback) {
   badge.rubric = new aestimia.Rubric(badge.rubric);
@@ -37,9 +49,11 @@ function submitApplication(badge, email, description, callback) {
 }
 
 exports.listAll = function (req, res, next) {
-  openbadger.getBadges(function (err, data) {
+  openbadger.getProgram(config('PROGRAM_NAME'), function(err, data) {
     if (err)
       return next(err);
+
+    data = helpers.splitProgramDescriptions(data);
 
     return res.render('badges/home.html', data);
   });
@@ -52,13 +66,15 @@ exports.single = function (req, res, next) {
     if (err)
       return next(err);
 
-    var badge = data.badge;
+    var badge = helpers.splitDescriptions(data.badge);
 
-    openbadger.getBadgeRecommendations( { id: id, limit: 4 }, function (err, data) {
+    openbadger.getProgram(config('PROGRAM_NAME'), function(err, data) {
       if (err)
         return next(err);
 
-      var otherBadges = data.badges;
+      data = helpers.splitProgramDescriptions(data, [badge.shortname]);
+
+      var otherBadges = getRandomSubarray(data.badges, 4);
 
       return res.render('badges/badge.html', { badge: badge, otherBadges: otherBadges });
     });
@@ -81,7 +97,7 @@ exports.apply = function apply(req, res, next) {
     if (err)
       return res.send(500, err);
 
-    var badge = data.badge;
+    var badge = helpers.splitDescriptions(data.badge);
 
     submitApplication(badge, req.body.email, req.body.description, function (err) {
       if (err)
@@ -100,7 +116,7 @@ exports.aestimia = aestimia.endpoint(function(submission, next) {
     if (err)
       return next(err);
 
-    var badge = data.badge;
+    var badge = helpers.splitDescriptions(data.badge);
     var recipient = submission.learner;
 
     if (submission.accepted) {
