@@ -49,7 +49,7 @@ function submitApplication(badge, email, description, callback) {
 }
 
 exports.listAll = function (req, res, next) {
-  openbadger.getProgram(config('PROGRAM_NAME'), function(err, data) {
+  openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
     if (err)
       return next(err);
 
@@ -68,7 +68,7 @@ exports.single = function (req, res, next) {
 
     var badge = helpers.splitDescriptions(data.badge);
 
-    openbadger.getProgram(config('PROGRAM_NAME'), function(err, data) {
+    openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
       if (err)
         return next(err);
 

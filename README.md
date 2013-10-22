@@ -55,7 +55,7 @@ Then you can source the file like `. config.env`.
 Environment
 -----------
 
-One way or another, the following configuration parameters are required: `COOKIE_SECRET`, `OPENBADGER_URL`, `OPENBADGER_SECRET`, `MANDRILL_KEY`.
+One way or another, the following configuration parameters are required: `COOKIE_SECRET`, `OPENBADGER_URL`, `OPENBADGER_SECRET`, `MANDRILL_KEY`, `PROGRAM_SHORTNAME`, `HOST`.
 
 License
 -------
