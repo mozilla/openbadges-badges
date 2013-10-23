@@ -82,8 +82,8 @@ li,
 .column,
 .columns {
   position: relative;
-  padding-left: 0.9375em;
-  padding-right: 0.9375em;
+/*  padding-left: 0.9375em;
+    padding-right: 0.9375em; */
   width: 100%;
   float: left;
 }
@@ -93,8 +93,8 @@ li,
   .column,
   .columns {
     position: relative;
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+/*  padding-left: 0.9375em;
+    padding-right: 0.9375em; */
     float: left;
   }
 
@@ -4534,6 +4534,13 @@ span.title {
 
 }
 
+@media only screen and (max-width: 460px) {
+    .square.grid > li > .badgethumb {
+        height: 130px;
+        background-size:120px;
+    }
+}
+
 /* line 177, ../sass/app.scss */
 .square.grid > li > .badgethumb > span.detail > * {
   display: block;
@@ -4711,6 +4718,11 @@ span.title {
   text-align:center;
 }
 
+@media only screen and (max-width: 460px) {
+    .claimform > input {
+        width: 100%;
+    }
+}
 .claimform > #submitcode {
   margin-left:10px;
   background-color:rgb(30,203,232);
@@ -4737,3 +4749,43 @@ span.title {
   color:rgb(0,0,0);
   float:right;
 }
+
+
+/**
+ * footer
+ */
+
+footer nav {
+    margin:.5em 0 !important;
+}
+footer nav ul {
+    border-top:1px solid #333;
+    padding-top:.5em !important;
+}
+
+#footer .support {
+    text-align:center;
+    margin:1em 0;
+}
+#footer .support img {
+    margin-top: 0 !important;
+    height: 80px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 1em;
+}
+
+@media only screen and (max-width: 460px) {
+    footer nav ul {
+        text-align:left !important;
+    }
+    footer nav li {
+        display:block !important;
+    }
+    footer nav li a {
+        display:inline-block;
+        padding:.25em .5em;
+    }
+
+}
+
