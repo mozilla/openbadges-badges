@@ -9,18 +9,18 @@
 <script src="{{ foundation('/js/vendor/custom.modernizr.js') }}"></script>
 {%- endblock %}
 {% block content %}
-<p class="badgeheader">Welcome to the home for Mozilla Open Badges badges. This initial set of badges celebrates the dynamic community
-  members involved in leading, building, and growing the Open Badges ecosystem. They represent different forms of individual commitment
-  to openness in areas such as assessment, peer review, technology, and alternative credentialing.</p>
+<p class="badgeheader">
+  Welcome to the home for Open Badges badges. Join the evangelists,
+  thinkers, and doers who are building this global community. Come
+  back to see new badge-earning opportunities and participate in the
+  system as it grows!
+</p>
 
-<p class="badgeheader">To learn how you might join these evangelists, thinkers, and doers in earning these badges, browse the badges below. Many of them can
-  be earned by providing appropriate evidence. We invite you to dive in and nominate yourself or others for them.</p>
-
-<p class="badgeheader">Come back to see new badge-earning opportunities as they become available and participate in the system as it grows!</p>
 <form class="claimform" method="get" action="{{ url('claim') }}">
   <input name="code" type="text" placeholder="Have a claim code? Enter it here.">
   <button id="submitcode" type="submit" class="button">Claim</button>
 </form>
+
 {% endblock %}
 {% block footer %}
 <section>
@@ -32,7 +32,7 @@
       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-750"><a href="http://community.openbadges.org" >Community</a></li>
       <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-113"><a href="http://openbadges.org/press/" >Press</a></li>
       <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-488"><a href="http://openbadges.tumblr.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-menu','http://openbadges.tumblr.com']);">Blog</a></li>
-      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="http://openbadges.org/about/" >About</a></li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/about" >About</a></li>
     </ul>					</nav>
 </section>
 <section>
