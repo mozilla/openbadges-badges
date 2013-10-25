@@ -3,7 +3,7 @@ function splitDescriptions(badge) {
     var descriptions = badge.description.split('*', 2);
 
     badge.shortDescription = descriptions[0];
-    badge.description = descriptions[1];
+    badge.description = descriptions[1] || descriptions[0];
   }
 
   return badge;

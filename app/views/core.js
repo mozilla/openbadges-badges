@@ -12,6 +12,7 @@ exports.home = function home (req, res, next) {
 
 exports.claim = function claim (req, res, next) {
   var code = (req.query.code||'').trim();
+  var email = req.query.email;
 
   function end (err) {
     if (err)
@@ -20,6 +21,10 @@ exports.claim = function claim (req, res, next) {
     return res.render('core/claim-new.html', {
       code: code
     });
+  }
+
+  if (email) {
+    return exports.processClaim(req,res,next);
   }
 
   if (!code)
@@ -43,8 +48,10 @@ exports.claim = function claim (req, res, next) {
 };
 
 exports.processClaim = function processClaim (req, res, next) {
-  var code = req.body.code;
-  var recipientEmail = req.body.email;
+  var code = req.body.code || req.query.code;
+  var recipientEmail = req.body.email || req.query.email;
+  var shortname = req.body.shortname || req.query.shortname;
+
   var redirect = url.format({
     pathname: res.locals.url('claim'),
     query: {code: code}
@@ -63,41 +70,51 @@ exports.processClaim = function processClaim (req, res, next) {
     });
   }
 
+  function handleAlreadyClaimed(shortname, recipientEmail) {
+    openbadger.getUserBadge( { id: shortname, email: recipientEmail }, function(err, data) {
+      console.log('blah');
+      if (err)
+        return end(err.message);
+
+      var badge = helpers.splitDescriptions(data.badge);
+
+      success(badge);
+    })
+  }
+
   try {
     validator.check(recipientEmail, 'Please enter a valid email address.').isEmail();
   } catch (e) {
     return end(e.message);
   }
 
-  openbadger.getBadgeFromCode( { code: code, email: recipientEmail }, function(err, data) {
-    if (err)
-      return end(err.message);
-
-    var badge = helpers.splitDescriptions(data.badge);
-
-    if (!badge)
-      return end();
-
-    openbadger.claim( { code: code, learner: { email: recipientEmail } }, function(err, data) {
-      if (err && err.message.indexOf('already has badge') <= -1)
+  if (code) {
+    openbadger.getBadgeFromCode( { code: code, email: recipientEmail }, function(err, data) {
+      if (err)
         return end(err.message);
 
-      if (err) {
-        // this is kind of annoying.  We might consider changing openbadger such that it still returns the badge instance even if the badge had already been claimed.
-        openbadger.getUserBadge( { id: badge.shortname, email: recipientEmail }, function(err, data) {
-          if (err)
-            return end(err.message);
+      var badge = helpers.splitDescriptions(data.badge);
 
-          badge.assertionUrl = data.badge.assertionUrl;
+      if (!badge)
+        return end();
+
+      openbadger.claim( { code: code, learner: { email: recipientEmail } }, function(err, data) {
+        if (err && err.message.indexOf('already has badge') <= -1)
+          return end(err.message);
+
+        if (err) {
+          handleAlreadyClaimed(badge.shortname, recipientEmail);
+        }
+        else {
+          email.sendApplySuccess(badge, recipientEmail);
+
+          badge.assertionUrl = data.url;
           success(badge);
-        });
-      }
-      else {
-        email.sendApplySuccess(badge, recipientEmail);
-
-        badge.assertionUrl = data.url;
-        success(badge);
-      }
+        }
+      });
     });
-  });
+  }
+  else {
+    handleAlreadyClaimed(shortname, recipientEmail);
+  }
 };

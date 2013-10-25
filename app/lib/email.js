@@ -16,8 +16,8 @@ function createPushUrl(badge, email) {
   return url.format({
     protocol: 'http',
     host: HOST,
-    pathname: '/',
-    hash: 'badgeaccept=' + encodeURIComponent(badge.shortname) + '&email=' + encodeURIComponent(email)
+    pathname: '/claim',
+    search: '?shortname=' + encodeURIComponent(badge.shortname) + '&email=' + encodeURIComponent(email)
   });
 }
 
@@ -25,8 +25,7 @@ function createApplyUrl(badge) {
   return url.format({
     protocol: 'http',
     host: HOST,
-    pathname: '/',
-    hash: 'badgeapply=' + encodeURIComponent(badge.shortname)
+    pathname: '/badges/' + encodeURIComponent(badge.shortname)
   });
 }
 
