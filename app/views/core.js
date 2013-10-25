@@ -72,7 +72,6 @@ exports.processClaim = function processClaim (req, res, next) {
 
   function handleAlreadyClaimed(shortname, recipientEmail) {
     openbadger.getUserBadge( { id: shortname, email: recipientEmail }, function(err, data) {
-      console.log('blah');
       if (err)
         return end(err.message);
 
