@@ -40,7 +40,7 @@ exports.claim = function claim (req, res, next) {
     if (!badge)
       return end('Invalid claim code');
 
-    return res.render('core/claim.html', {
+    return res.render('core/claim-start.html', {
       badge: badge,
       code: code
     });
@@ -64,7 +64,7 @@ exports.processClaim = function processClaim (req, res, next) {
   }
 
   function success(badge) {
-    res.render('core/send-to-backpack.html', {
+    res.render('core/claim-store.html', {
       badge: badge,
       email: recipientEmail
     });
