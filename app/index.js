@@ -10,6 +10,8 @@ const middleware = require('./middleware');
 const nunjucks = require('nunjucks');
 const path = require('path');
 const views = require('./views');
+const openbadger = require('./lib/openbadger');
+const openbadgerHooks = require('./lib/openbadger-hooks')(openbadger);
 
 const app = express();
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.join(__dirname, 'templates')), {autoescape: true});
@@ -39,7 +41,7 @@ app.use(function (req, res, next) {
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(middleware.session());
-app.use(middleware.csrf({ whitelist: ['/aestimia'] }));
+app.use(middleware.csrf({ whitelist: ['/aestimia','/notify/claim','/notify/award'] }));
 app.use(middleware.sass());
 app.use(flash());
 
@@ -48,6 +50,8 @@ app.use(helpers.addMessages);
 
 app.use(staticRoot, express.static(staticDir));
 app.use(foundationRoot, express.static(foundationDir));
+
+openbadgerHooks.define(app);
 
 app.get('/', 'home', middleware.redirect('badges', 302));
 app.get('/summit', 'summit', views.summit);
