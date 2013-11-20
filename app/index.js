@@ -14,6 +14,14 @@ const views = require('./views');
 const app = express();
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.join(__dirname, 'templates')), {autoescape: true});
 env.express(app);
+env.addFilter('addQueryString', function(url, kwargs) {
+  var parts = []
+  Object.keys(kwargs).forEach(function (key) {
+    if (kwargs[key] !== '' && key !== '__keywords')
+      parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(kwargs[key]));
+  });
+  return url + '?' + parts.join('&');
+});
 
 // Bootstrap the app for reversible routing, and other niceties
 require('../lib/router.js')(app);
@@ -53,6 +61,7 @@ app.get('/', 'home', middleware.redirect('badges', 302));
 app.get('/summit', 'summit', views.summit);
 app.get('/claim', 'claim', views.claim);
 app.post('/claim', 'claim.action', views.processClaim);
+app.get('/share', 'claim.share', views.share);
 app.get('/badges', 'badges', views.badges.listAll);
 app.get('/badges/:badgeId', 'badge', views.badges.single);
 app.post('/badges/:badgeId', 'badge.apply', views.badges.apply);

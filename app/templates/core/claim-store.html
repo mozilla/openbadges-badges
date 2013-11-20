@@ -19,3 +19,12 @@
   </div>
 </div>
 {% endblock %}
+
+{% block foot %}
+  {{ super() }}
+  <script>
+    window.onsubmit = function () {
+      window.location = "{{ url('claim.share') }}?email={{ email }}&shortname={{ badge.shortname }}";
+    };
+  </script>
+{% endblock %}
