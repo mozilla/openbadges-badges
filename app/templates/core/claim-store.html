@@ -24,7 +24,9 @@
   {{ super() }}
   <script>
     window.onsubmit = function () {
-      window.location = "{{ url('claim.share') }}?email={{ email }}&shortname={{ badge.shortname }}";
+      setTimeout(function (){
+        window.location.href = "{{ url('claim.share') | addQueryString(email=email, shortname=badge.shortname) }}";
+      }, 0);
     };
   </script>
 {% endblock %}

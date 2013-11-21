@@ -10,17 +10,23 @@ const middleware = require('./middleware');
 const nunjucks = require('nunjucks');
 const path = require('path');
 const views = require('./views');
+const urlUtil = require('url');
 
 const app = express();
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.join(__dirname, 'templates')), {autoescape: true});
 env.express(app);
 env.addFilter('addQueryString', function(url, kwargs) {
-  var parts = []
+  var parseQueryString = true;
+  url = urlUtil.parse(url, parseQueryString);
+  url.query = url.query || {};
+
   Object.keys(kwargs).forEach(function (key) {
     if (kwargs[key] !== '' && key !== '__keywords')
-      parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(kwargs[key]));
+      url.query[key] = kwargs[key];
   });
-  return url + '?' + parts.join('&');
+
+  delete url.search;
+  return new nunjucks.runtime.SafeString(urlUtil.format(url));
 });
 
 // Bootstrap the app for reversible routing, and other niceties
