@@ -22,11 +22,13 @@
 
 {% block foot %}
   {{ super() }}
-  <script>
-    window.onsubmit = function () {
+  <script type="text/javascript">
+    var form = document.getElementById('claim-form');
+    form.onsubmit = function () {
       setTimeout(function (){
         window.location.href = "{{ url('claim.share') | addQueryString(email=email, shortname=badge.shortname) }}";
       }, 0);
+      return true;
     };
   </script>
 {% endblock %}
