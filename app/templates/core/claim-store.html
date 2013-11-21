@@ -1,8 +1,9 @@
 {% extends "core/layout.html" %}
 
+{% from "macros/claim.html" import breadcrumbs %}
+
 {% block content %}
-{% set breadcrumb = 'store' %}
-{% include "core/claim-breadcrumbs.html" %}
+{{ breadcrumbs('store') }}
 <h3 class="">Congratulations!  You earned a badge.</h3>
 <p class="intro">Now, send it to your Mozilla Badge Backpack. The Backpack allows you to collect and share your badges across the web.</p>
 <div class="grid-wrapper">

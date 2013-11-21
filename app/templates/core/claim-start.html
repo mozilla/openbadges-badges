@@ -1,8 +1,9 @@
 {% extends "core/layout.html" %}
 
+{% from "macros/claim.html" import breadcrumbs %}
+
 {% block content %}
-{% set breadcrumb = 'claim' %}
-{% include "core/claim-breadcrumbs.html" %}
+{{ breadcrumbs('claim') }}
 <h2 class="text-center">Claim your badge</h2>
 <div class="grid-wrapper all-width-one-half all-width-full-when-small">
   <div class="grid-item">
