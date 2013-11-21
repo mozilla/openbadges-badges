@@ -16,8 +16,7 @@ const app = express();
 const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.join(__dirname, 'templates')), {autoescape: true});
 env.express(app);
 env.addFilter('addQueryString', function(url, kwargs) {
-  var parseQueryString = true;
-  url = urlUtil.parse(url, parseQueryString);
+  url = urlUtil.parse(url, true); // true means to parse query string
   url.query = url.query || {};
 
   Object.keys(kwargs).forEach(function (key) {
@@ -25,7 +24,7 @@ env.addFilter('addQueryString', function(url, kwargs) {
       url.query[key] = kwargs[key];
   });
 
-  delete url.search;
+  delete url.search; // or format will ignore .query
   return new nunjucks.runtime.SafeString(urlUtil.format(url));
 });
 
