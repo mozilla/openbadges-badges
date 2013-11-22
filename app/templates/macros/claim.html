@@ -1,7 +1,7 @@
 {% macro breadcrumbs(active) %}
 <ul class="breadcrumbs">
   <li class="{% if active == 'claim' %}current{% else %}unavailable{% endif %}">Claim</li>
-  <li class="{% if active == 'store' %}current{% else %}unavailable{% endif %}">Store</li>
-  <li class="{% if active == 'share' %}current{% else %}unavailable{% endif %}">Share</li>
+  <li class="{% if active == 'collect' %}current{% else %}unavailable{% endif %}">Collect</li>
+  <li class="{% if active == 'show' %}current{% else %}unavailable{% endif %}">Show</li>
 </ul>
 {% endmacro %}
