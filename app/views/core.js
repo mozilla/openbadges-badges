@@ -40,7 +40,7 @@ exports.claim = function claim (req, res, next) {
     if (!badge)
       return end('Invalid claim code');
 
-    return res.render('core/claim.html', {
+    return res.render('core/claim-start.html', {
       badge: badge,
       code: code
     });
@@ -64,7 +64,7 @@ exports.processClaim = function processClaim (req, res, next) {
   }
 
   function success(badge) {
-    res.render('core/send-to-backpack.html', {
+    res.render('core/claim-store.html', {
       badge: badge,
       email: recipientEmail
     });
@@ -116,4 +116,35 @@ exports.processClaim = function processClaim (req, res, next) {
   else {
     handleAlreadyClaimed(shortname, recipientEmail);
   }
+};
+
+exports.share = function share (req, res, next) {
+  var recipientEmail = req.body.email || req.query.email;
+  var shortname = req.body.shortname || req.query.shortname;
+
+  var redirect = url.format({
+    pathname: res.locals.url('claim'),
+  });
+
+  function end (err) {
+    if (err)
+      req.flash('error', err);
+    return res.redirect(redirect);
+  }
+
+  function success(badge) {
+    res.render('core/claim-share.html', {
+      badge: badge,
+      email: recipientEmail
+    });
+  }
+
+  openbadger.getUserBadge( { id: shortname, email: recipientEmail }, function(err, data) {
+    if (err)
+      return end(err.message);
+
+    var badge = helpers.splitDescriptions(data.badge);
+
+    success(badge);
+  })
 };
