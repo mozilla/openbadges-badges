@@ -1,0 +1,3 @@
+{% macro twitterButton(text, url='', hashtags='') %}
+  <a class="button" href="{{ '//twitter.com/share' | addQueryString(text=text, url=url, hashtags=hashtags) }}" target="_blank">Tweet</a>
+{% endmacro %}

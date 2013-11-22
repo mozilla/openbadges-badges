@@ -230,6 +230,45 @@ h4 {
   top: 2px;
 }
 
+.breadcrumbs {
+  text-align: center;
+  background-color: #eee;
+  height: 0.4em;
+  counter-reset: breadcrumb;
+}
+
+.breadcrumbs li {
+  display: inline-block;
+  position: relative;
+  top: -0.6em;
+  margin: 0px 40px;
+  padding: 0px 8px;
+  background-color: white;
+  color: #ccc;
+  counter-increment: breadcrumb;
+}
+
+.breadcrumbs li:before {
+  content: counter(breadcrumb);
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 0.75em;
+  line-height: 1.5em;
+  font-size: 0.8em;
+  background-color: #ccc;
+  color: white;
+  margin-right: 10px;
+}
+
+.breadcrumbs .current {
+  color: inherit;
+}
+
+.breadcrumbs .current:before {
+  background-color: rgb(31, 57, 89);
+}
+
 /* ===[ Badges ]============================================================= */
 
 /* ---[ Thumbnails ]--------------------------------------------------------- */

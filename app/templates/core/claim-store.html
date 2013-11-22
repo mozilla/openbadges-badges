@@ -1,6 +1,9 @@
 {% extends "core/layout.html" %}
 
+{% from "macros/claim.html" import breadcrumbs %}
+
 {% block content %}
+{{ breadcrumbs('collect') }}
 <h3 class="">Congratulations!  You earned a badge.</h3>
 <p class="intro">Now, send it to your Mozilla Badge Backpack. The Backpack allows you to collect and share your badges across the web.</p>
 <div class="grid-wrapper">
@@ -16,4 +19,17 @@
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block foot %}
+  {{ super() }}
+  <script type="text/javascript">
+    var form = document.getElementById('claim-form');
+    form.onsubmit = function () {
+      setTimeout(function (){
+        window.location.href = "{{ url('claim.share') | addQueryString(email=email, shortname=badge.shortname) }}";
+      }, 0);
+      return true;
+    };
+  </script>
 {% endblock %}
