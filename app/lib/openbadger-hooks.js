@@ -10,8 +10,8 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
     return res.send(403, { status: 'forbidden', reason: reason });
   }
 
-  function respondWithError(res, err) {
-    return res.send(500, { status: 'error', error: 'An error occurred while attempting to handle this claim notification.' });
+  function respondWithError(res, message) {
+    return res.send(500, { status: 'error', error: message });
   }
 
   function auth(req, res, next) {
@@ -52,19 +52,19 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
           return res.send(200, { status: 'ok' });
 
         if (!claimCode)
-          return res.send(500, { status: 'error', error: 'No claimCode provided' });
+          return respondWithError(res, 'No claimCode provided');
 
         claimCode = claimCode.trim();
 
         openbadger.getBadgeFromCode( { code: claimCode, email: email }, function (err, data) {
           if (err)
-            return respondWithError(res, err);
+            return respondWithError(res, err.message);
 
           var badge = helpers.splitDescriptions(data.badge);
 
           openbadger.claim({ code: claimCode, learner: { email: email } }, function (err, data) {
             if (err)
-              return respondWithError(res, err);
+              return respondWithError(res, err.message);
 
             mandrill.sendApplySuccess(badge, email);
 
