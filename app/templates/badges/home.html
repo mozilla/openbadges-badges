@@ -10,7 +10,7 @@
     <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
       {% for badge in badges %}
       <li>
-        <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.image }}');">
+        <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.imageUrl }}');">
           <span class="detail">
             <span class="content">{{ badge.shortDescription }}</span>
             <span class="badgelink">See all ></span>

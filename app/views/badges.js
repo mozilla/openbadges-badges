@@ -3,6 +3,9 @@ const config = require('../lib/config');
 const email = require('../lib/email');
 const helpers = require('../helpers');
 const openbadger = require('../lib/openbadger');
+const badgekit = require('../lib/api');
+var util = require('util');
+
 const url = require('url');
 const validator = require('validator');
 
@@ -49,15 +52,14 @@ function submitApplication(badge, email, description, callback) {
 }
 
 exports.listAll = function (req, res, next) {
-  openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
-    if (err)
-      return next(err);
+  badgekit.getBadges(function(err, data) {
+    if (err) return next(err);
 
     data = helpers.splitProgramDescriptions(data);
 
-    return res.render('badges/home.html', data);
+    return res.render('badges/home.html', { badges : data });
   });
-}
+};
 
 exports.single = function (req, res, next) {
   var id = req.params.badgeId;

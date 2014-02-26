@@ -24,7 +24,8 @@
     "validator": "~1.5.1",
     "bower": "~1.2.6",
     "node-sass": "~0.6.6",
-    "jwt-simple": "0.1.0"
+    "jwt-simple": "0.1.0",
+    "badgekit-issue-client": "git+https://github.com/mozilla/badgekit-issue-client.git"
   },
   "devDependencies": {
     "tap-prettify": "0.0.2",
