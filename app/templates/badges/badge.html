@@ -14,8 +14,8 @@
       <h4>Here is the criteria for the badge:</h4>
       <p>{{ badge.criteria }}</p>
       <h4>Tell us about your work and why you qualify for the badge:</h4>
-      <form id="apply-form" action="{{ url('badge.apply', {badgeId: badge.id}) }}" method="post">
-        <input type="hidden" name="badgeId" value="{{ badge.id }}">
+      <form id="apply-form" action="{{ url('badge.apply', {badgeId: badge.slug}) }}" method="post">
+        <input type="hidden" name="badgeId" value="{{ badge.slug }}">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <textarea name="description"></textarea>
         <h4>Enter your email address here:</h4>
@@ -35,7 +35,7 @@
     <ul class="small-block-grid-2 large-block-grid-4 badge-thumbs square grid">
       {% for badge in otherBadges %}
       <li>
-        <a class="badgethumb" href="{{ url('badge', {badgeId: badge.id }) }}" style="background-image:url('{{ badge.imageUrl }}');">
+        <a class="badgethumb" href="{{ url('badge', {badgeId: badge.slug }) }}" style="background-image:url('{{ badge.imageUrl }}');">
           <span class="detail">
             <span class="content">{{ badge.shortDescription }}</span>
             <span class="badgelink">See all ></span>

@@ -62,24 +62,25 @@ exports.listAll = function (req, res, next) {
 };
 
 exports.single = function (req, res, next) {
-  var id = req.params.badgeId;
+  var slug = req.params.badgeId;
 
-  openbadger.getBadge( { id: id }, function (err, data) {
-    if (err)
+  badgekit.getBadge( { slug:slug }, function (err, data) {
+    if (err) {
       return next(err);
+    }
 
-    var badge = helpers.splitDescriptions(data.badge);
+    var badge = helpers.splitDescriptions(data);
 
-    openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
+    /*openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
       if (err)
         return next(err);
 
       data = helpers.splitProgramDescriptions(data, [badge.shortname]);
 
-      var otherBadges = getRandomSubarray(data.badges, 4);
+      var otherBadges = getRandomSubarray(data.badges, 4); */
 
-      return res.render('badges/badge.html', { badge: badge, otherBadges: otherBadges });
-    });
+    return res.render('badges/badge.html', { badge: badge, otherBadges: [] });
+//    });
   });
 }
 
