@@ -31,7 +31,7 @@ function submitApplication(badge, email, description, callback) {
   var criteriaUrl = url.format({
     protocol: 'http',
     host: config('HOST'),
-    pathname: '/badges/' + badge.shortname
+    pathname: '/badges/' + badge.slug
   });
 
   var application = new aestimia.Application({
@@ -41,7 +41,7 @@ function submitApplication(badge, email, description, callback) {
     criteriaUrl: criteriaUrl,
     description: description,
     evidence: [],
-    meta: { badgeId: badge.id },
+    meta: { badgeSlug: badge.slug },
     url: criteriaUrl
   });
 
@@ -49,32 +49,26 @@ function submitApplication(badge, email, description, callback) {
 }
 
 exports.listAll = function (req, res, next) {
-  openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
+  openbadger.getBadges({ system: config('SYSTEM_SHORTNAME') }, function(err, badges) {
     if (err)
       return next(err);
 
-    data = helpers.splitProgramDescriptions(data);
-
-    return res.render('badges/home.html', data);
+    return res.render('badges/home.html', { badges: badges });
   });
 }
 
 exports.single = function (req, res, next) {
-  var id = req.params.badgeId;
+  var badgeSlug = req.params.badgeSlug;
 
-  openbadger.getBadge( { id: id }, function (err, data) {
+  openbadger.getBadge( { system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function (err, badge) {
     if (err)
       return next(err);
 
-    var badge = helpers.splitDescriptions(data.badge);
-
-    openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
+    openbadger.getBadges({ system: config('SYSTEM_SHORTNAME') }, function(err, badges) {
       if (err)
         return next(err);
 
-      data = helpers.splitProgramDescriptions(data, [badge.shortname]);
-
-      var otherBadges = getRandomSubarray(data.badges, 4);
+      var otherBadges = getRandomSubarray(badges, 4);
 
       return res.render('badges/badge.html', { badge: badge, otherBadges: otherBadges });
     });
@@ -82,9 +76,10 @@ exports.single = function (req, res, next) {
 }
 
 exports.apply = function apply(req, res, next) {
-  var badgeId = req.body.badgeId;
-  if (!badgeId)
-    return res.send(400, 'Missing badgeId parameter');
+  console.log('blah');
+  var badgeSlug = req.body.badgeSlug;
+  if (!badgeSlug)
+    return res.send(400, 'Missing badgeSlug parameter');
 
   try {
     validator.check(req.body.description, 'Please enter a description').notEmpty();
@@ -93,11 +88,9 @@ exports.apply = function apply(req, res, next) {
     return res.send(400, e.message);
   }
 
-  openbadger.getBadge(badgeId, function(err, data) {
+  openbadger.getBadge({ system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function(err, badge) {
     if (err)
       return res.send(500, err);
-
-    var badge = helpers.splitDescriptions(data.badge);
 
     submitApplication(badge, req.body.email, req.body.description, function (err) {
       if (err)
@@ -112,22 +105,22 @@ exports.apply = function apply(req, res, next) {
 };
 
 exports.aestimia = aestimia.endpoint(function(submission, next) {
-  openbadger.getBadge(submission.meta.badgeId, function (err, data) {
+  openbadger.getBadge({ system: config('SYSTEM_SHORTNAME'), badge: submission.meta.badgeSlug }, function (err, badge) {
     if (err)
       return next(err);
 
-    var badge = helpers.splitDescriptions(data.badge);
     var recipient = submission.learner;
 
     if (submission.accepted) {
       email.sendApplySuccess(badge, recipient);
 
       var query = {
-        badge: badge.shortname,
-        learner: {email: recipient}
+        system: config('SYSTEM_SHORTNAME'),
+        badge: badge.slug,
+        email: recipient
       }
 
-      openbadger.awardBadge(query, next);
+      openbadger.createBadgeInstance(query, next);
     }
     else {
       email.sendApplyFailure(badge, recipient);

@@ -72,8 +72,8 @@ app.get('/claim', 'claim', views.claim);
 app.post('/claim', 'claim.action', views.processClaim);
 app.get('/share', 'claim.share', views.share);
 app.get('/badges', 'badges', views.badges.listAll);
-app.get('/badges/:badgeId', 'badge', views.badges.single);
-app.post('/badges/:badgeId', 'badge.apply', views.badges.apply);
+app.get('/badges/:badgeSlug', 'badge', views.badges.single);
+app.post('/badges/:badgeSlug', 'badge.apply', views.badges.apply);
 app.use('/aestimia', views.badges.aestimia);
 
 app.get('*', views.errors.notFound);

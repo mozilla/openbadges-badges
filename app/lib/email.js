@@ -56,7 +56,7 @@ module.exports = {
         to: [ { email: email } ],
         global_merge_vars: [
           { name: 'badgename', content: badge.name },
-          { name: 'badgeimage', content: badge.image },
+          { name: 'badgeimage', content: badge.imageUrl },
           { name: 'badgedesc', content: badge.description },
           { name: 'pushurl', content: createPushUrl(badge, email) } ]
       }

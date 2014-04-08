@@ -39,12 +39,16 @@ exports = module.exports = function (options) {
     if (whitelisted(list, req.url))
       return next();
 
+    console.log(req.session._csrf);
+    
     var token = req.session._csrf || (req.session._csrf = uid(24));
 
     if ('GET' === req.method || 'HEAD' === req.method)
       return next();
 
     var val = value(req);
+    console.log(val);
+    console.log(token);
     if (val != token) {
       // logger.debug("CSRF token failure");
       return next(new Error('Forbidden - expecting "'+token+'", got "'+val+'"'));
