@@ -80,7 +80,6 @@ $(document).ready(function() {
   function submitApplication() {
     var form = $(this);
     var feedback = form.find('#apply-feedback');
-    console.log(form.serialize);
     $.ajax({
       url: form.attr('action'),
       type: 'POST',

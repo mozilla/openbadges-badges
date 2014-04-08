@@ -18,9 +18,16 @@ function getRandomSubarray(arr, size) {
 }
 
 function submitApplication(badge, email, description, callback) {
-  badge.rubric = new aestimia.Rubric(badge.rubric);
-  if (!badge.categories) badge.categories = [];
-  badge.categories.push('openbadges');
+  var aestimiaData = { rubric: { items: [] }, categories: ['openbadges'] };
+  var rubricData = { items: [] };
+  badge.criteria.forEach(function(criterion) {
+    rubricData.items.push({ required: criterion.required, text: criterion.description });
+  });
+
+  aestimiaData.rubric = new aestimia.Rubric(rubricData);
+  aestimiaData.name = badge.name;
+  aestimiaData.description = badge.earnerDescription;
+  aestimiaData.image = badge.imageUrl;
 
   var callbackUrl = url.format({
     protocol: 'http',
@@ -36,7 +43,7 @@ function submitApplication(badge, email, description, callback) {
 
   var application = new aestimia.Application({
     applicant: new aestimia.Applicant(email),
-    badge: new aestimia.Badge(badge),
+    badge: new aestimia.Badge(aestimiaData),
     callbackUrl: callbackUrl,
     criteriaUrl: criteriaUrl,
     description: description,
@@ -76,7 +83,6 @@ exports.single = function (req, res, next) {
 }
 
 exports.apply = function apply(req, res, next) {
-  console.log('blah');
   var badgeSlug = req.body.badgeSlug;
   if (!badgeSlug)
     return res.send(400, 'Missing badgeSlug parameter');
@@ -120,12 +126,11 @@ exports.aestimia = aestimia.endpoint(function(submission, next) {
         email: recipient
       }
 
-      openbadger.createBadgeInstance(query, next);
+      return openbadger.createBadgeInstance(query, next);
     }
     else {
       email.sendApplyFailure(badge, recipient);
+      return next();
     }
-
-    next();
   });
 });
