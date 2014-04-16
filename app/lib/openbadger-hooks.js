@@ -2,7 +2,7 @@ const jwt = require('jwt-simple');
 const util = require('util');
 const mandrill = require('./email');
 const helpers = require('../helpers');
-
+const config = require('./config');
 const JWT_SECRET = process.env['OPENBADGER_SECRET'];
 
 module.exports = function makeOpenbadgerHooks(openbadger) {
@@ -42,39 +42,63 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
     return next();
   }
 
+  function reviewHook(req, res, next) {
+    const approved = req.body.approved;
+    const application = req.body.application;
+    const badge = application.badge;
+
+    function finish(err) {
+      if (err && err.code !== 409)
+        return next(err);
+
+      application.processed = new Date();
+      openbadger.updateApplication({ system: config('SYSTEM_SHORTNAME'), badge: badge.slug, application: application }, function (err) {
+        return res.send(200, 'Success');
+      });
+    }
+
+    var recipient = application.learner;
+
+    if (approved) {
+      var query = {
+        system: config('SYSTEM_SHORTNAME'),
+        badge: badge.slug,
+        email: recipient
+      }
+
+      return openbadger.createBadgeInstance(query, finish);
+    }
+    else {
+      mandrill.sendApplyFailure(badge, recipient);
+      return finish();
+    }
+  }
+
+  function claimHook(req, res, next) {
+    return res.send(200, { status: 'ok' });
+  }
+
+  function awardHook(req, res, next) {
+    const badge = req.body.badge;
+    const recipient = req.body.email;
+    const assertionUrl = req.body.assertionUrl;
+
+    mandrill.sendApplySuccess(badge, recipient, assertionUrl);
+
+    return res.send(200, { status: 'ok' });
+  }
+
   return {
     define: function defineRoutes(app) {
-      app.post('/notify/claim', auth, function(req, res, next) {
-        var claimCode = req.body.claimCode;
-        var email = req.body.email;
-
-        if (req.body.isTesting)
-          return res.send(200, { status: 'ok' });
-
-        if (!claimCode)
-          return respondWithError(res, 'No claimCode provided');
-
-        claimCode = claimCode.trim();
-
-        openbadger.getBadgeFromCode( { code: claimCode, email: email }, function (err, data) {
-          if (err)
-            return respondWithError(res, err.message);
-
-          var badge = helpers.splitDescriptions(data.badge);
-
-          openbadger.claim({ code: claimCode, learner: { email: email } }, function (err, data) {
-            if (err)
-              return respondWithError(res, err.message);
-
-            mandrill.sendApplySuccess(badge, email);
-
-            return res.send(200, { status: 'ok' });
-          });
-        });
-      });
-
-      app.post('/notify/award', auth, function(req, res, next) {
-        return res.send(200, { status: 'ok' });
+      app.post('/webhook', auth, function (req, res, next) {
+        switch (req.body.action) {
+          case 'award':
+            return awardHook(req, res, next);
+          case 'claim':
+            return claimHook(req, res, next);
+          case 'review':
+            return reviewHook(req, res, next);
+        }
       });
     }
   };

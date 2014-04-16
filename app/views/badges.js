@@ -1,4 +1,3 @@
-const aestimia = require('../lib/aestimia');
 const config = require('../lib/config');
 const email = require('../lib/email');
 const helpers = require('../helpers');
@@ -15,44 +14,6 @@ function getRandomSubarray(arr, size) {
     shuffled[i] = temp;
   }
   return shuffled.slice(0, size);
-}
-
-function submitApplication(badge, email, description, callback) {
-  var aestimiaData = { rubric: { items: [] }, categories: ['openbadges'] };
-  var rubricData = { items: [] };
-  badge.criteria.forEach(function(criterion) {
-    rubricData.items.push({ required: criterion.required, text: criterion.description });
-  });
-
-  aestimiaData.rubric = new aestimia.Rubric(rubricData);
-  aestimiaData.name = badge.name;
-  aestimiaData.description = badge.earnerDescription;
-  aestimiaData.image = badge.imageUrl;
-
-  var callbackUrl = url.format({
-    protocol: 'http',
-    host: config('HOST'),
-    pathname: '/aestimia'
-  });
-
-  var criteriaUrl = url.format({
-    protocol: 'http',
-    host: config('HOST'),
-    pathname: '/badges/' + badge.slug
-  });
-
-  var application = new aestimia.Application({
-    applicant: new aestimia.Applicant(email),
-    badge: new aestimia.Badge(aestimiaData),
-    callbackUrl: callbackUrl,
-    criteriaUrl: criteriaUrl,
-    description: description,
-    evidence: [],
-    meta: { badgeSlug: badge.slug },
-    url: criteriaUrl
-  });
-
-  aestimia.submit(application, callback);
 }
 
 exports.listAll = function (req, res, next) {
@@ -94,43 +55,18 @@ exports.apply = function apply(req, res, next) {
     return res.send(400, e.message);
   }
 
-  openbadger.getBadge({ system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function(err, badge) {
+  var application = {
+    learner: req.body.email,
+    evidence: [{ reflection: req.body.description }]
+  };
+
+  var context = { system: config('SYSTEM_SHORTNAME'), badge: badgeSlug, application: application };
+
+  openbadger.addApplication(context, function (err, application) {
     if (err)
       return res.send(500, err);
 
-    submitApplication(badge, req.body.email, req.body.description, function (err) {
-      if (err)
-        return res.send(500, err);
-
-      //TODO: send email to reviewer
-      return res.send(200, '');
-    });
+    return res.send(200, 'Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.');
   });
-  // form data in req.body.email and req.body.description
-  return res.send(200, 'Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.');
 };
 
-exports.aestimia = aestimia.endpoint(function(submission, next) {
-  openbadger.getBadge({ system: config('SYSTEM_SHORTNAME'), badge: submission.meta.badgeSlug }, function (err, badge) {
-    if (err)
-      return next(err);
-
-    var recipient = submission.learner;
-
-    if (submission.accepted) {
-      email.sendApplySuccess(badge, recipient);
-
-      var query = {
-        system: config('SYSTEM_SHORTNAME'),
-        badge: badge.slug,
-        email: recipient
-      }
-
-      return openbadger.createBadgeInstance(query, next);
-    }
-    else {
-      email.sendApplyFailure(badge, recipient);
-      return next();
-    }
-  });
-});

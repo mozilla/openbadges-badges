@@ -27,7 +27,7 @@
     var form = document.getElementById('claim-form');
     form.onsubmit = function () {
       setTimeout(function (){
-        window.location.href = "{{ url('claim.share') | addQueryString(email=email, shortname=badge.shortname) }}";
+        window.location.href = "{{ url('claim.share') | addQueryString(email=email, badgeSlug=badge.slug) }}";
       }, 0);
       return true;
     };

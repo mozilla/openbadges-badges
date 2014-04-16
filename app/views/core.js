@@ -1,3 +1,4 @@
+const config = require('../lib/config');
 const email = require('../lib/email');
 const openbadger = require('../lib/openbadger');
 const helpers = require('../helpers');
@@ -12,7 +13,6 @@ exports.home = function home (req, res, next) {
 
 exports.claim = function claim (req, res, next) {
   var code = (req.query.code||'').trim();
-  var email = req.query.email;
 
   function end (err) {
     if (err)
@@ -23,22 +23,21 @@ exports.claim = function claim (req, res, next) {
     });
   }
 
-  if (email) {
-    return exports.processClaim(req,res,next);
-  }
-
   if (!code)
     return end();
 
-  openbadger.getBadgeFromCode( { code: code, email: '' }, function(err, data) {
+  openbadger.getBadgeFromCode( { system: config('SYSTEM_SHORTNAME') }, code, function(err, data) {
     if (err && err.message.indexOf('already has badge') <= -1)
       // should probably send back to the summit page with an error message
       return end(err.message);
 
-    var badge = helpers.splitDescriptions(data.badge);
+    var badge = data;
 
     if (!badge)
       return end('Invalid claim code');
+
+    if (badge.claimed)
+      return end('That claim code has already been used');
 
     return res.render('core/claim-start.html', {
       badge: badge,
@@ -48,9 +47,8 @@ exports.claim = function claim (req, res, next) {
 };
 
 exports.processClaim = function processClaim (req, res, next) {
-  var code = req.body.code || req.query.code;
-  var recipientEmail = req.body.email || req.query.email;
-  var shortname = req.body.shortname || req.query.shortname;
+  var code = req.body.code;
+  var recipientEmail = req.body.email;
 
   var redirect = url.format({
     pathname: res.locals.url('claim'),
@@ -70,57 +68,58 @@ exports.processClaim = function processClaim (req, res, next) {
     });
   }
 
-  function handleAlreadyClaimed(shortname, recipientEmail) {
-    openbadger.getUserBadge( { id: shortname, email: recipientEmail }, function(err, data) {
-      if (err)
-        return end(err.message);
-
-      var badge = helpers.splitDescriptions(data.badge);
-
-      success(badge);
-    })
-  }
-
   try {
     validator.check(recipientEmail, 'Please enter a valid email address.').isEmail();
   } catch (e) {
     return end(e.message);
   }
 
-  if (code) {
-    openbadger.getBadgeFromCode( { code: code, email: recipientEmail }, function(err, data) {
-      if (err)
+  openbadger.getBadgeFromCode( { system: config('SYSTEM_SHORTNAME') }, code, function(err, data) {
+    if (err)
+      return end(err.message);
+
+    var badge = data;
+
+    if (!badge)
+      return end();
+
+    openbadger.createBadgeInstance( { system: config('SYSTEM_SHORTNAME'), badge: badge.slug, email: recipientEmail }, code, function(err, instance) {
+      if (err && err.code !== 409)
         return end(err.message);
 
-      var badge = helpers.splitDescriptions(data.badge);
+      if (err) {
+        badge.assertionUrl = err.details.assertionUrl;
+      }
+      else {
+        badge.assertionUrl = instance.assertionUrl;
+      }
 
-      if (!badge)
-        return end();
-
-      openbadger.claim( { code: code, learner: { email: recipientEmail } }, function(err, data) {
-        if (err && err.message.indexOf('already has badge') <= -1)
-          return end(err.message);
-
-        if (err) {
-          handleAlreadyClaimed(badge.shortname, recipientEmail);
-        }
-        else {
-          email.sendApplySuccess(badge, recipientEmail);
-
-          badge.assertionUrl = data.url;
-          success(badge);
-        }
-      });
+      success(badge);
     });
-  }
-  else {
-    handleAlreadyClaimed(shortname, recipientEmail);
-  }
+  });
 };
+
+exports.showClaimed = function showClaimed (req, res, next) {
+  var badgeSlug = req.query.badgeSlug;
+  var recipientEmail = req.query.email;
+  var assertionUrl = req.query.assertionUrl;
+
+  openbadger.getBadge({ system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function (err, badge) {
+    if (err)
+      return next(err);
+
+    badge.assertionUrl = assertionUrl;
+
+    return res.render('core/claim-store.html', {
+      badge: badge,
+      email: recipientEmail
+    });
+  });
+}
 
 exports.share = function share (req, res, next) {
   var recipientEmail = req.body.email || req.query.email;
-  var shortname = req.body.shortname || req.query.shortname;
+  var badgeSlug = req.body.badgeSlug || req.query.badgeSlug;
 
   var redirect = url.format({
     pathname: res.locals.url('claim'),
@@ -139,11 +138,11 @@ exports.share = function share (req, res, next) {
     });
   }
 
-  openbadger.getUserBadge( { id: shortname, email: recipientEmail }, function(err, data) {
+  openbadger.getBadge( { system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function(err, data) {
     if (err)
       return end(err.message);
 
-    var badge = helpers.splitDescriptions(data.badge);
+    var badge = data;
 
     success(badge);
   })

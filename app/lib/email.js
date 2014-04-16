@@ -12,12 +12,12 @@ function defaultCallback(err, res) {
   }
 }
 
-function createPushUrl(badge, email) {
+function createPushUrl(badge, email, assertionUrl) {
   return url.format({
     protocol: 'http',
     host: HOST,
-    pathname: '/claim',
-    search: '?shortname=' + encodeURIComponent(badge.shortname) + '&email=' + encodeURIComponent(email)
+    pathname: '/showClaimed',
+    search: '?badgeSlug=' + encodeURIComponent(badge.slug) + '&assertionUrl=' + encodeURIComponent(assertionUrl) + '&email=' + encodeURIComponent(email)
   });
 }
 
@@ -25,7 +25,7 @@ function createApplyUrl(badge) {
   return url.format({
     protocol: 'http',
     host: HOST,
-    pathname: '/badges/' + encodeURIComponent(badge.shortname)
+    pathname: '/badges/' + encodeURIComponent(badge.slug)
   });
 }
 
@@ -47,7 +47,7 @@ module.exports = {
   },
 
   // Send email to notify user that their badge application was successful and that they were awarded a badge
-  sendApplySuccess: function sendApplySuccess(badge, email, callback) {
+  sendApplySuccess: function sendApplySuccess(badge, email, assertionUrl, callback) {
     callback = callback || defaultCallback;
     mandrill('messages/send-template', {
       template_name: 'obb-badge-earned',
@@ -57,8 +57,8 @@ module.exports = {
         global_merge_vars: [
           { name: 'badgename', content: badge.name },
           { name: 'badgeimage', content: badge.imageUrl },
-          { name: 'badgedesc', content: badge.description },
-          { name: 'pushurl', content: createPushUrl(badge, email) } ]
+          { name: 'badgedesc', content: badge.earnerDescription },
+          { name: 'pushurl', content: createPushUrl(badge, email, assertionUrl) } ]
       }
     }, callback);
   }
