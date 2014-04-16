@@ -23,7 +23,7 @@
     "validator": "~1.5.1",
     "bower": "~1.2.6",
     "node-sass": "~0.6.6",
-    "jwt-simple": "0.1.0"
+    "jws": "~0.2.5"
   },
   "devDependencies": {
     "tap-prettify": "0.0.2",

@@ -1,9 +1,14 @@
-const jwt = require('jwt-simple');
+const jws = require('jws');
 const util = require('util');
+const crypto = require('crypto');
 const mandrill = require('./email');
 const helpers = require('../helpers');
 const config = require('./config');
-const JWT_SECRET = process.env['OPENBADGER_SECRET'];
+const JWT_SECRET = config('OPENBADGER_SECRET');
+
+function sha256(body) {
+  return crypto.createHash('sha256').update(body).digest('hex')
+}
 
 module.exports = function makeOpenbadgerHooks(openbadger) {
   function respondWithForbidden(res, reason) {
@@ -15,29 +20,29 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
   }
 
   function auth(req, res, next) {
-    const param = req.method === "GET" ? req.query : req.body;
-    const token = param.auth;
+    const param = req.body;
+    var token = req.headers.authorization;
+    token = token.slice(token.indexOf('"')+1, -1);
     const email = param.email;
+
+    if (!jws.verify(token, JWT_SECRET)) {
+      msg = 'verification of jws failed';
+      return respondWithForbidden(res, msg);
+    }
 
     const now = Date.now()/1000|0;
     var decodedToken, msg;
     if (!token)
-      return respondWithForbidden(res, 'missing mandatory `auth` param');
+      return respondWithForbidden(res, 'missing mandatory `authorization` header');
     try {
-      decodedToken = jwt.decode(token, JWT_SECRET);
+      decodedToken = jws.decode(token);
     } catch(err) {
       return respondWithForbidden(res, 'error decoding JWT: ' + err.message);
     }
-    if (decodedToken.prn !== email) {
-      msg = '`prn` mismatch: given %s, expected %s';
-      return respondWithForbidden(res, util.format(msg, decodedToken.prn, email));
+
+    if (decodedToken.payload.body.hash !== sha256(JSON.stringify(req.body))) {
+      return respondWithForbidden(res, 'request body hash does not match token hash');
     }
-
-    if (!decodedToken.exp)
-      return respondWithForbidden(res, 'Token must have exp (expiration) set');
-
-    if (decodedToken.exp < now)
-      return respondWithForbidden(res, 'Token has expired');
 
     return next();
   }
@@ -90,7 +95,7 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
 
   return {
     define: function defineRoutes(app) {
-      app.post('/webhook', auth, function (req, res, next) {
+      app.post('/webhook', [auth, function (req, res, next) {
         switch (req.body.action) {
           case 'award':
             return awardHook(req, res, next);
@@ -99,7 +104,7 @@ module.exports = function makeOpenbadgerHooks(openbadger) {
           case 'review':
             return reviewHook(req, res, next);
         }
-      });
+      }]);
     }
   };
 }
