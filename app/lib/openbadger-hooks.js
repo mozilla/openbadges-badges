@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const mandrill = require('./email');
 const helpers = require('../helpers');
 const config = require('./config');
-const JWT_SECRET = config('OPENBADGER_SECRET');
+const JWT_SECRET = config('BADGEKIT_API_WEBHOOK_SECRET');
 
 function sha256(body) {
   return crypto.createHash('sha256').update(body).digest('hex')
