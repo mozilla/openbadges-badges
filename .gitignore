@@ -15,6 +15,7 @@ results
 node_modules
 bower_components
 .idea
+.DS_Store
 
 config.env
 config.json

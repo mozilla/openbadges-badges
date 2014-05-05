@@ -8,9 +8,9 @@
       {% for badge in badges %}
         <div class="grid-item">
           <div class="badge-thumb">
-            <a href="{{ url('badge', {badgeId: badge.id}) }}">
+            <a href="{{ url('badge', {badgeSlug: badge.slug}) }}">
               <h3 class="title">{{ badge.name }}</h3>
-              <img src="{{ badge.image }}" class="image">
+              <img src="{{ badge.imageUrl }}" class="image">
             </a>
           </div>
         </div>

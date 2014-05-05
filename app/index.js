@@ -54,7 +54,7 @@ app.use(function (req, res, next) {
 app.use(express.compress());
 app.use(express.bodyParser());
 app.use(middleware.session());
-app.use(middleware.csrf({ whitelist: ['/aestimia','/notify/claim','/notify/award'] }));
+app.use(middleware.csrf({ whitelist: ['/webhook'] }));
 app.use(middleware.sass());
 app.use(flash());
 
@@ -69,12 +69,12 @@ openbadgerHooks.define(app);
 app.get('/', 'home', middleware.redirect('badges', 302));
 app.get('/summit', 'summit', views.summit);
 app.get('/claim', 'claim', views.claim);
+app.get('/showClaimed', 'showClaimed', views.showClaimed);
 app.post('/claim', 'claim.action', views.processClaim);
 app.get('/share', 'claim.share', views.share);
 app.get('/badges', 'badges', views.badges.listAll);
-app.get('/badges/:badgeId', 'badge', views.badges.single);
-app.post('/badges/:badgeId', 'badge.apply', views.badges.apply);
-app.use('/aestimia', views.badges.aestimia);
+app.get('/badges/:badgeSlug', 'badge', views.badges.single);
+app.post('/badges/:badgeSlug', 'badge.apply', views.badges.apply);
 
 app.get('*', views.errors.notFound);
 app.use(views.errors.error);

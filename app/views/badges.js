@@ -1,4 +1,3 @@
-const aestimia = require('../lib/aestimia');
 const config = require('../lib/config');
 const email = require('../lib/email');
 const helpers = require('../helpers');
@@ -17,64 +16,27 @@ function getRandomSubarray(arr, size) {
   return shuffled.slice(0, size);
 }
 
-function submitApplication(badge, email, description, callback) {
-  badge.rubric = new aestimia.Rubric(badge.rubric);
-  if (!badge.categories) badge.categories = [];
-  badge.categories.push('openbadges');
-
-  var callbackUrl = url.format({
-    protocol: 'http',
-    host: config('HOST'),
-    pathname: '/aestimia'
-  });
-
-  var criteriaUrl = url.format({
-    protocol: 'http',
-    host: config('HOST'),
-    pathname: '/badges/' + badge.shortname
-  });
-
-  var application = new aestimia.Application({
-    applicant: new aestimia.Applicant(email),
-    badge: new aestimia.Badge(badge),
-    callbackUrl: callbackUrl,
-    criteriaUrl: criteriaUrl,
-    description: description,
-    evidence: [],
-    meta: { badgeId: badge.id },
-    url: criteriaUrl
-  });
-
-  aestimia.submit(application, callback);
-}
-
 exports.listAll = function (req, res, next) {
-  openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
+  openbadger.getBadges({ system: config('SYSTEM_SHORTNAME') }, function(err, badges) {
     if (err)
       return next(err);
 
-    data = helpers.splitProgramDescriptions(data);
-
-    return res.render('badges/home.html', data);
+    return res.render('badges/home.html', { badges: badges });
   });
 }
 
 exports.single = function (req, res, next) {
-  var id = req.params.badgeId;
+  var badgeSlug = req.params.badgeSlug;
 
-  openbadger.getBadge( { id: id }, function (err, data) {
+  openbadger.getBadge( { system: config('SYSTEM_SHORTNAME'), badge: badgeSlug }, function (err, badge) {
     if (err)
       return next(err);
 
-    var badge = helpers.splitDescriptions(data.badge);
-
-    openbadger.getProgram(config('PROGRAM_SHORTNAME'), function(err, data) {
+    openbadger.getBadges({ system: config('SYSTEM_SHORTNAME') }, function(err, badges) {
       if (err)
         return next(err);
 
-      data = helpers.splitProgramDescriptions(data, [badge.shortname]);
-
-      var otherBadges = getRandomSubarray(data.badges, 4);
+      var otherBadges = getRandomSubarray(badges, 4);
 
       return res.render('badges/badge.html', { badge: badge, otherBadges: otherBadges });
     });
@@ -82,9 +44,9 @@ exports.single = function (req, res, next) {
 }
 
 exports.apply = function apply(req, res, next) {
-  var badgeId = req.body.badgeId;
-  if (!badgeId)
-    return res.send(400, 'Missing badgeId parameter');
+  var badgeSlug = req.body.badgeSlug;
+  if (!badgeSlug)
+    return res.send(400, 'Missing badgeSlug parameter');
 
   try {
     validator.check(req.body.description, 'Please enter a description').notEmpty();
@@ -93,46 +55,18 @@ exports.apply = function apply(req, res, next) {
     return res.send(400, e.message);
   }
 
-  openbadger.getBadge(badgeId, function(err, data) {
+  var application = {
+    learner: req.body.email,
+    evidence: [{ reflection: req.body.description }]
+  };
+
+  var context = { system: config('SYSTEM_SHORTNAME'), badge: badgeSlug, application: application };
+
+  openbadger.addApplication(context, function (err, application) {
     if (err)
       return res.send(500, err);
 
-    var badge = helpers.splitDescriptions(data.badge);
-
-    submitApplication(badge, req.body.email, req.body.description, function (err) {
-      if (err)
-        return res.send(500, err);
-
-      //TODO: send email to reviewer
-      return res.send(200, '');
-    });
+    return res.send(200, 'Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.');
   });
-  // form data in req.body.email and req.body.description
-  return res.send(200, 'Thanks for applying for this badge. A notification will be sent to you upon review of the badge application.');
 };
 
-exports.aestimia = aestimia.endpoint(function(submission, next) {
-  openbadger.getBadge(submission.meta.badgeId, function (err, data) {
-    if (err)
-      return next(err);
-
-    var badge = helpers.splitDescriptions(data.badge);
-    var recipient = submission.learner;
-
-    if (submission.accepted) {
-      email.sendApplySuccess(badge, recipient);
-
-      var query = {
-        badge: badge.shortname,
-        learner: {email: recipient}
-      }
-
-      openbadger.awardBadge(query, next);
-    }
-    else {
-      email.sendApplyFailure(badge, recipient);
-    }
-
-    next();
-  });
-});
