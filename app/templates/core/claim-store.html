@@ -28,7 +28,7 @@
     form.onsubmit = function () {
       setTimeout(function (){
         window.location.href = "{{ url('claim.share') | addQueryString(email=email, badgeSlug=badge.slug) }}";
-      }, 0);
+      }, 1000);
       return true;
     };
   </script>
