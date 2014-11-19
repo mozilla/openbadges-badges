@@ -3,7 +3,6 @@
   <head>
     <title>{% block title %}Open Badges Badges{% endblock %}</title>
     {% block head -%}
-    <link rel="stylesheet" id="tabzilla-css" href="//www.mozilla.org/tabzilla/media/css/tabzilla.css">
     <link rel="stylesheet" href="{{ static('/css/base.css') }}">
     {%- endblock %}
   </head>
@@ -14,7 +13,6 @@
           <div class="constrained">
             {% block header -%}
               <h1>
-                <a href="http://www.mozilla.org" id="tabzilla">Mozilla</a>
                 <a href="{{ url('home') }}" id="home">Open Badges</a>
               </h1>
             {%- endblock %}
@@ -50,7 +48,6 @@
       {%- endblock %}
     {%- endblock %}
     {% block foot -%}
-      <script type="text/javascript" src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script>
     {%- endblock %}
   </body>
 </html>
